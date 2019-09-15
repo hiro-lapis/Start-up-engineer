@@ -23,23 +23,18 @@ class Unique{
   const Humor = 2;//Ev発生率に影響
   const Inspiration = 3;//codingクリティカル率
 }
-//行動属性フラグ(クラス定数）setCry,actVoiceに影響
-class Hobby{
-  const Game = 1;
-  const Comic = 2;
-  const Book = 3;
-}
 //////////////////////////////////////////////////
 //各種変数定義
 
 //インスタンス格納用
-$engineers = array();
+$hero = array();
 $products = array();
-$sevenOfSins = array();
+$enemys = array();
 
 //各種フラグ（phase順）
-$startFlg = 0;//スタートボタンを押した時
+$restartFlg = 0;//初めて画面に繊維してきたか、リスタートボタンを押した時
 $settingFlg = 0;//キャラクター設定が終わった
+$startFlg = 0;//スタートボタンを押した時
 $actionFlg = 0;//毎ターンのアクションコマンドがある時
 $productInfoFlg = 0;//amount,qualityが一定値値以上になるとtrue,出来栄えを告知してくれる
 $eventFlg = 0;//アクションコマンドの後1/4の確率でtrue,次ターンの冒頭に発生
@@ -53,7 +48,6 @@ abstract class Humans {
   protected $name;
   protected $img;
   protected $hp;//ハッスルポイント
-  protected $mp;//モチベーション
   protected $attackMin;
   protected $critical;
 
@@ -67,9 +61,6 @@ abstract class Humans {
   public function setHp($num){
     $this->hp = $num;
   }
-  public function setMp($num){
-    $this->hp = $num;
-  }
   //ゲッター
   public function getName(){
     return $this->name;
@@ -79,10 +70,6 @@ abstract class Humans {
     return $this->personal;
   }
   public function getHp(){
-    //protectされているhpプロパティを引っ張ってくるメソッド
-    return $this->hp;
-  }
-  public function getMp(){
     //protectされているhpプロパティを引っ張ってくるメソッド
     return $this->hp;
   }
@@ -106,17 +93,13 @@ abstract class Humans {
 //主人公クラス
     class Hero extends Humans{
       private $unique;
-      private $personal;
-
-      function __construct($name, $img, $hp, $mp, $attackMin, $critical, $unique, $personal);
+      function __construct($name, $img, $hp, $attackMin, $critical, $unique);
       $this->name = $name;
       $this->img = $img;
       $this->hp = $hp;
-      $this->mp = $mp;
       $this->attMin = $attackMin;
       $this->critical = $critical;
       $this->unique = $unique;
-      $this->personal = $personal;
       }
       //ゲッター
       public function getCritical(){
@@ -131,7 +114,7 @@ abstract class Humans {
         return $this->unique;
       }
       //セッター
-      //HPとMPはHumanにある。攻撃力
+      //HPはHumanにある。攻撃力
       public function setAttMin($str){
         return $this->attMin = $str;
       }
@@ -183,14 +166,14 @@ abstract class Humans {
       public function rest(){
         History::set('煮詰まったから休憩・・・');
         $this->setHp(mt_rand(50, 100));
-        $this->setMp(mt_rand(20, 40));
-        History::set('HPとMPが回復した！');
+        History::set('体力が回復した！');
 
         if(!mt_rand($this->critical, 9)){
-          History::set('閃いた！私,天才かも!?');
-          Product::setAmount(20);
-          Product::setQuality(1);
-          History::set('頭がすごく冴えていたので、少しだけコードを書いた！');
+          History::set('休んでいたら、問題を解決するコードを閃いた！');
+          Product::setAmount(getAmount() + 20);
+          Product::setQuality(getQuality() +1);
+          History::set('少しだけコードを書くことができた！');
+          History::set('休むのも勉強のうちって、こういうことだったのね♪');
         }
       }
 }
@@ -200,11 +183,10 @@ abstract class Humans {
 
 //敵役クラス
     class Enemy extends Human{
-      public function __construct($name, $img, $hp, $mp, $attackMin, $attackMax, $critical){
+      public function __construct($name, $img, $hp, $attackMin, $attackMax, $critical){
       $this->name = $name;
       $this->img = $img;
       $this->hp = $hp;
-      $this->mp = $mp;
       $this->attMin = $attackMin;
       $this->attMin = $attackMax;
       $this->critical = $critical;
@@ -253,10 +235,10 @@ interface ProductInterface{
     }
 
     //ゲッター（主人公のcodingアクションでamountとqualityを更新する）
-    public static function getAmount (){
+    public static function getAmount(){
       return self->amount;
     }
-    public static function getQuality (){
+    public static function getQuality(){
       return self->quality;
     }
     public static function getAmountCount(){
@@ -333,15 +315,9 @@ class History implements HistoryInterface {
 //////////////////////////////////////////////////
 //インスタンス生成
 
-$hero = new Hero ('アイ', img/bustup/ai01.png, 300, 50, 30, 1, Unique::Trainee, Hobby::Game);
-$hero = new Hero ('アイ', img/bustup/ai01.png, 300, 50, 30, 1, Unique::Trainee, Hobby::Comic);
-$hero = new Hero ('アイ', img/bustup/ai01.png, 300, 50, 30, 1, Unique::Trainee, Hobby::Book);
-$hero = new Hero ('アイ', img/bustup/ai01.png, 300, 50, 30, 1, Unique::Humor, Hobby::Game);
-$hero = new Hero ('アイ', img/bustup/ai01.png, 300, 50, 30, 1, Unique::Humor, Hobby::Comic);
-$hero = new Hero ('アイ', img/bustup/ai01.png, 300, 50, 30, 1, Unique::Humor, Hobby::Book);
-$hero = new Hero ('アイ', img/bustup/ai01.png, 300, 50, 30, 1, Unique::Inspiration, Hobby::Game);
-$hero = new Hero ('アイ', img/bustup/ai01.png, 300, 50, 30, 1, Unique::Inspiration, Hobby::Comic);
-$hero = new Hero ('アイ', img/bustup/ai01.png, 300, 50, 30, 1, Unique::Inspiration, Hobby::Book);
+$hero = new Hero ('アイ', img/bustup/ai01.png, 700, 30, 1, Unique::Trainee);
+$hero = new Hero ('アイ', img/bustup/ai01.png, 500, 30, 2, Unique::Humor);
+$hero = new Hero ('アイ', img/bustup/ai01.png, 500, 30, 3, Unique::Inspiration);
 
 $enemys = new Enemy ('お騒がせ上司', img/bustup/enemy01.png, 100, 0, 30, 50, 0);
 $enemys = new Enemy ('冷やかし同期', img/bustup/enemy02.png, 200, 0, 40, 50, 0);
@@ -360,79 +336,25 @@ function createEnemy($count){
   global $enemys;
   $enemy = $enemys[0 + $count];
   Hisotry::set($enemy->getName.'と一緒に仕事をすることになった！');
-  $_SESSION['monster'] = $enemy;
+  $_SESSION['enemy'] = $enemy;
 }
 
 function gameover(){
   $_SESSION = array();
 }
 function init(){
-  createHero($_SESSION['hero']);
-  createEnemy($_SESSION['enemy']);
+  debug('初期化します！');
+  History::clear();
+  $_SESSION['turnCount'] = 0;
+  $_SESSION['enemyCount'] = 0;
   Product::getAmount(0);
   Product::getQuality(0);
   Product::getamountCount(0);
 }
 
 //クラス設定ここまで
-//////////////////////////////////////////////////
-
-
 /////////////////////////////////////////////////
-//　ゲームシステム
+/////////////////////////////////////////////////
 
-//オープニング画面
-if(empty($_POST) || $_POST['restart']){
-  debug('ページに遷移・リスタートボタンが押されたので、restartフラグをONにします');
-  $restartFlg = 1;//POSTなし
-  $settingFlg = 0;//OP→セッティング
-  $startFlg = 0;//セッティング画面→通常画面
-  $actionFlg = 0;//通常画面でボタンを押した時
-  $resultFlg = 0;//productの判定、インドメーション
-  $eventFlg = 0;//イベント発生の判定。処理の最後に日数＋１
-
-  $SESSION['turnCount'] = 0;
-  debug('restartフラグがOnなので、OP画面を出力します');
-}
-
-
-if($_POST){
-  debug('POSTあり。各フラグを出力します');
-  debug($startFlg);
-  debug($settingFlg);
-  debug($actionFlg);
-  debug($eventFlg );
-  debug($resultFlg);
-  debug($productInfoFlg);
-}
-
-//OP画面でスタートボタンを押したら、セッティング画面へ遷移する
-if(S_POST['start']){ $startFlg = 1;){
-  debug('POSTされた値をSESSIONに格納し、初期化関数を実行します');
-  switch ($_POST['']) {
-    case 'value':
-      // code...
-      break;
-
-    default:
-      // code...
-      break;
-  }
-   $_POST
-   $_POST
-
-
-
-  init();
-
-}
-
-
-
-}
-
-Product::sayAmount();
-Product::sayQuality();
-$SESSION['turanCount'] += 1;
 
  ?>
