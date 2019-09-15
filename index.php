@@ -355,6 +355,93 @@ function init(){
 //クラス設定ここまで
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
+// ゲームシステム
+if(!empty($_POST)){
+  debug('POST送信を各フラグに変換します');
+  $restartFlg = (!empty($_POST['restart'])) ? true : false ;
+  $settingFlg = (!empty($_POST['setting'])) ? true : false ;
+  $startFlg = (!empty($_POST['start'])) ? true : false ;
+  $actionFlg = (!empty($_POST['action'])) ? true : false ;
+  $resultFlg = (PRODUCT::$amount > 2500 ) ? true : false ;//PRODUCTが一定以上になったらエンディングへ
 
+  debug($restartFlg);
+  debug($settingFlg);
+  debug($startFlg);
+  debug($actionFlg);
+  debug($eventFlg );
+  debug($resultFlg);
+
+  debug('現在のターン:'.$_SESSION['turnCount']);
+  debug('倒した敵の数:'.$_SESSION['enemyCount']);
+
+}
+
+/////////////////////////////////////////////////
+//初期設定
+if(empty($_POST){
+  debug('ページに遷移してきたので、restartフラグをONにします');
+  $restartFlg = 1;
+} elseif ($_POST['restart']){
+  debug('リスタートボタンが押されたので、startフラグをONにします');
+  $restartFlg = 1;
+
+  debug('他のフラグを初期化します');
+  $settingFlg = 0;//OP→セッティング
+  $startFlg = 0;//セッティング画面→通常画面
+  $actionFlg = 0;//通常画面でボタンを押した時
+  $eventFlg = 0;//イベント発生の判定。処理の最後に日数＋１
+  $SESSION['turnCount'] = 0;
+  debug('OP画面を出力します');
+}
+
+/////////////////////////////////////////////////
+//再スタート:$_SESSIONを全て空にする
+if($restartFlg){
+  gameover();
+
+} else {
+
+  //セッテイング画面
+  if($settingFlg){
+    debug('スタートボタンが押されました');
+    debug('settingへ移行します');
+  }
+}
+
+/////////////////////////////////////////////////
+//ゲームスタート（選択画面から遷移してきた初回のみ）
+if($startFlg){
+  init();//0~2の値が入り、$_SESSION['hero']にインスタンスを格納
+
+} elseif ($resultFlg){
+  debug('エンディング判定を行います');
+  debug(PRODUCT::amount)
+
+}
+
+//スタート移行、毎ターンの開始ポイント
+  if($actionFlg){
+    switch ($actionFlg) {
+      case 'attack':
+        $_SESSION['hero']->attack();
+        break;
+      case 'coding':
+        $_SESSION['hero']->coding();
+        break;
+      case 'trainning':
+        $_SESSION['hero']->trainning()
+        break;
+      case 'rest':
+        $_SESSION['hero']->rest()
+        break;
+    }
+    //PRODUCTのプロパティをアナウンスするかどうかの判定を行う
+    PRODUCT::sayAmount;
+    PRODUCT::sayQuality;
+}
+
+if($_SESSION['turnCount'] % 3 == 0 && empty($_SESSION['enemy'])){
+  createEnemy($_SESSION['enemyCount']);
+}
 
  ?>
