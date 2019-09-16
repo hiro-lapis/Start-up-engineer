@@ -28,7 +28,6 @@ class Unique{
 
 //インスタンス格納用
 $hero = array();
-$products = array();
 $enemys = array();
 
 //各種フラグ（phase順）
@@ -51,8 +50,7 @@ abstract class Humans {
   protected $attackMin;
   protected $critical;
 
-  abstract public function actVoice();
-  abstract public function sayCry();
+  public function actVoice();
 
   //セッター
   public function setName($str){
@@ -76,7 +74,7 @@ abstract class Humans {
 
   public function attack($targetObj){
     $attackPoint = mt_rand($this->attackMin, 100);
-    $judge = mt_rand($this->critical,10)
+    $judge = mt_rand($this->critical,10);
     if($judge !== false){
       //criticalポイントに応じて必殺確率が変わる
       $attackPoint = $attackPoint * 1.7;
@@ -93,7 +91,7 @@ abstract class Humans {
 //主人公クラス
     class Hero extends Humans{
       private $unique;
-      function __construct($name, $img, $hp, $attackMin, $critical, $unique);
+      function __construct($name, $img, $hp, $attackMin, $critical, $unique){
       $this->name = $name;
       $this->img = $img;
       $this->hp = $hp;
@@ -102,32 +100,27 @@ abstract class Humans {
       $this->unique = $unique;
       }
       //ゲッター
+      public function getAttMin($str){
+        return $this->attMin;
+      }
       public function getCritical(){
         return $this->critical;
       }
-
-      public function getPersonal(){
-        return $this->personal;
-      }
-
       public function getUnique(){
         return $this->unique;
       }
       //セッター
       //HPはHumanにある。攻撃力
       public function setAttMin($str){
-        return $this->attMin = $str;
+        $this->attMin = $str;
       }
 //actionコマンド①攻撃
       public function attack($targetObj){
         //Heroのattackオーバーライド
-        $attackPoint = if($this->unique === Unique::Trainee ){
-                                 mt_rand($this->attackMin, 100) + 20;
-                        } else { mt_rand($this->attackMin, 100); }
+        $attackPoint = mt_rand($this->attackMin, 100);
 
-        $judge = mt_rand($this->critical,10)
+        $judge = mt_rand($this->critical,10);
         if($judge !== false){
-          //criticalポイントに応じて必殺確率が変わる
           $attackPoint = $attackPoint * 1.7;
           $attackPoint = (int)$attackPoint;
           History::set($this->name.'の会心の一撃！');
@@ -139,17 +132,14 @@ abstract class Humans {
 //actionコマンド②コーディング
       public function coding($targetObj){
         $codingPoint = mt_rand($this->attackMin, 100);
-        $criticalPoint = if($this->unique === Unique::Inspiration ){ $this->critical + 2;
-                                                            } else { $this->critical; }
-        $judge = mt_rand($criticalPoint,10);
+        $judge = mt_rand($this->critical,10);
      if($judge !== false){
-          $targetObj->setQuality($targetObj->getQuality()++);
-          //criticalポイントに応じて必殺確率が変わる
+          Product::setQuality();
           $codingPoint = $codingPoint * 1.7;
           $codingPoint = (int)$codingPoint;
           History::set('今日は頭のキレがいい！');
           }
-          $targetObj->setAmount($targetObj->getAmount() + $codingPoint);
+          Product::setAmount(PRODUCT::getAmount() + $codingPoint);
           History::set($codingPoint.'行のコードを打った！');
       }
 //actionコマンド③トレーニング
@@ -173,16 +163,54 @@ abstract class Humans {
           Product::setAmount(getAmount() + 20);
           Product::setQuality(getQuality() +1);
           History::set('少しだけコードを書くことができた！');
-          History::set('休むのも勉強のうちって、こういうことだったのね♪');
+          History::set('休むのも勉強のうちって、こういうことだったのか！と納得した');
         }
       }
-}
+      public function actVoice($action){
+        switch ($action) {
+          case 'attack':
+            History::set('アイちゃんは心の中でいい返した。');
+            History::set('挑戦しなければ成功もありません！');
+          break;
+          case 'coding':
+            History::set('気合いの入ったコーディング');
+            History::set('この１タイプ１タイプに命を込める！');
+          break;
+          case 'trainning':
+            History::set('いいコードはいい筋肉に宿る！');
+          break;
+          case 'rest':
+            History::set('たまにはリフレッシュしなくちゃね');
+          break;
+        }
+      }
+      public function sayCry($enemys){
+        switch ($enemys) {
+          case '嫌がらせ上司':
+            History::set('やめて！顔を近づけて話さないでください！');
+          break;
+          case '冷やかし同期':
+            History::set('人生分かってます的な気取りっぷりがメンタルに響く！');
+          break;
+          case 'マウント上司':
+            History::set('事あるごとに上から目線の会話が辛い！');
+          break;
+          case '口だけ上司':
+            History::set('いい事を言っているけど、行動がアレ過ぎる・・・');
+          break;
+          case '弱気な自分':
+            History::set('どんどん過ぎていく日々に気が滅入る');
+          break;
+        }
+      }
+    }
 
 
 
 
 //敵役クラス
-    class Enemy extends Human{
+    class Enemy extends Humans{
+      protected $attackMax;
       public function __construct($name, $img, $hp, $attackMin, $attackMax, $critical){
       $this->name = $name;
       $this->img = $img;
@@ -190,6 +218,7 @@ abstract class Humans {
       $this->attMin = $attackMin;
       $this->attMin = $attackMax;
       $this->critical = $critical;
+    }
     public function actVoice(){
       History::set($this->name.'の嫌がらせ！');
     }
@@ -200,8 +229,6 @@ abstract class Humans {
       History::set($this->name.'が口を挟んでくる！');
     }//攻撃は抽象クラスにあるものをそのまま使う
   }
-}
-
 
 //////////////////////////////////////////////////
 //interface + 静的メンバ
@@ -222,70 +249,75 @@ interface ProductInterface{
   public static $qualityCount = 0;
     //セッター
     public static function setAmount($str){
-      self->amount = $str;
+      self::$amount += $str;
     }
-    public static function setQuality($str){
-      self->quality = $str;
+    public static function setQuality(){
+      self::$quality += 1;
     }
-    public static function setAmountCount($str){
-      self->amountCount = $str;
+    public static function setAmountCount(){
+      self::$amountCount += 1;
     }
-    public static function setQualityCount($str){
-      self->qualityCount = $str;
+    public static function setQualityCount(){
+      self::$qualityCount += 1;
     }
 
     //ゲッター（主人公のcodingアクションでamountとqualityを更新する）
     public static function getAmount(){
-      return self->amount;
+      return self::$amount;
     }
     public static function getQuality(){
-      return self->quality;
+      return self::$quality;
     }
     public static function getAmountCount(){
-      return self->amountCount;
+      return self::$amountCount;
     }
     public static function getQualityCount(){
-      return self->amountCount;
+      return self::$qualityCount;
     }
-}
     public static function sayAmount(){//呼び出す時は、Product::sayMount()
       //$productInfoFlg =true の時に実行
-      if(self->amount > 200){
+      if(self::$amount > 200){
         History::set('200行のコードを書けた！私の挑戦は、まだ始まったばかりだ！');
-        ++self->amountCount;
+        self::setAmountCount();
       }
-      if(self->amount > 500 && self->amountCount === 1){
+      if(self::$amount > 500 && self::$amountCount === 1){
         History::set('ログイン・ログアウト機能ができた！');
         History::set('まだまだ道は長い。けど、コードを書くのに慣れてきた気がする！');
+        self::setAmountCount();
       }
-      if(self->amount > 1000 && self->amountCount === 2){
+      if(self::$amount > 1000 && self::$amountCount === 2){
         History::set('アカウント登録・編集機能ができた！');
         History::set('コードの量的には半分くらいだろうか');
         History::set('仕事帰りのプログラミングは大変だが、充実している！');
+        self::setAmountCount();
       }
-      if(self->amount > 1800 && self->amountCount === 3){
+      if(self::$amount > 1800 && self::$amountCount === 3){
         History::set('情報登録・編集・表示機能など、主要な機能は実装できた！');
         History::set('だが、動作テストしてみたら、バグが見つかった・・・');
         History::set('シンドくて、最初の頃のような楽しさがない・・・');
         History::set('でも、楽しさなんて後回し。まずはやり切ろう！');
+        sself::etAmountCount();
       }
-      if(self->amount > 2500 && self->amountCount === 4){
+      if(self::$amount > 2500 && self::$amountCount === 4){
         History::set('バグは取り終えた！後はサーバーにアップするだけだ');
         History::set('私がこのサービスを公開しなければ、地球に隕石が落ちる');
         History::set('眠たい目をこすりつつ、デプロイ作業に取り掛かった！');
-
-      } self->setAmountCount(self->getAmountCount + 1);
+        self::setAmountCount();
+      }
     }
+
     public static function sayQuality(){
-     if(self->quality > 3){
+     if(self::$quality > 3){
         History::set('とりあえず及第点くらいの成果物にはなりそうだ');
+        self::setQualityCount();
       }
-      if(self->amount > 5 && self->qualityCount === 1){
+      if(self::$amount > 5 && self::$qualityCount === 1){
         History::set('かなりイケてるアプリになりそうだ！');
+        self::setQualityCount();
       }
-      if(self->amount > 8 && self->qualityCount === 2){
-        History::set('とんでもないアプリを作ってしまったかもしれない！');
-      } self->setQualityCount(self->getQualityCount + 1);
+      if(self::$amount > 8 && self::$qualityCount === 2){
+        History::set('とんでもないWebサービスを作ってしまったかもしれない！');
+      } self::setQualityCount();
     }
   }
 //Eventクラス
@@ -298,7 +330,7 @@ interface EventInterface{
 
 //Historyクラス
 interface HistoryInterface{
-  public function set();
+  public function set($str);
   public function clear();
 }
 class History implements HistoryInterface {
@@ -330,7 +362,6 @@ $enemys = new Enemy ('パワハラ上司', img/bustup/enemy05.png, 10000, 50, 15
 function createHero($num){
   global $hero;
   $_SESSION['hero'] = $hero[$num];//0~8
-  History::set($hero->Unique)
 }
 function createEnemy($count){
   global $enemys;
@@ -378,7 +409,7 @@ if(!empty($_POST)){
 
 /////////////////////////////////////////////////
 //初期設定
-if(empty($_POST){
+if(empty($_POST)){
   debug('ページに遷移してきたので、restartフラグをONにします');
   $restartFlg = 1;
 } elseif ($_POST['restart']){
@@ -415,13 +446,13 @@ if($startFlg){
 
 } elseif ($resultFlg){
   debug('エンディング判定を行います');
-  debug(PRODUCT::amount)
+  debug(PRODUCT::amount);
 
 }
 
 //スタート移行、毎ターンの開始ポイント
   if($actionFlg){
-    switch ($actionFlg) {
+    switch ($_POST['action']) {
       case 'attack':
         $_SESSION['hero']->attack();
         break;
@@ -429,10 +460,10 @@ if($startFlg){
         $_SESSION['hero']->coding();
         break;
       case 'trainning':
-        $_SESSION['hero']->trainning()
+        $_SESSION['hero']->trainning();
         break;
       case 'rest':
-        $_SESSION['hero']->rest()
+        $_SESSION['hero']->rest();
         break;
     }
     //PRODUCTのプロパティをアナウンスするかどうかの判定を行う

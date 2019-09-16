@@ -378,3 +378,58 @@
 [27-Aug-2019 10:19:28 Asia/Tokyo] PHP Notice:  Undefined index: attack in /Applications/MAMP/htdocs/objective_lesson01/index.php on line 103
 [27-Aug-2019 10:19:28 Asia/Tokyo] PHP Notice:  Undefined index: myhp in /Applications/MAMP/htdocs/objective_lesson01/index.php on line 103
 [27-Aug-2019 10:19:28 Asia/Tokyo] PHP Notice:  Undefined index: attack in /Applications/MAMP/htdocs/objective_lesson01/index.php on line 104
+[15-Sep-2019 13:41:59 UTC] PHP Fatal error:  Uncaught Error: Class 'Enemy' not found in /Applications/MAMP/htdocs/startupengineer/index.php:209
+Stack trace:
+#0 {main}
+  thrown in /Applications/MAMP/htdocs/startupengineer/index.php on line 209
+[15-Sep-2019 14:10:28 UTC] PHP Fatal error:  Uncaught Error: Class 'Enemy' not found in /Applications/MAMP/htdocs/startupengineer/index.php:209
+Stack trace:
+#0 {main}
+  thrown in /Applications/MAMP/htdocs/startupengineer/index.php on line 209
+[15-Sep-2019 14:11:00 UTC] PHP Fatal error:  Uncaught Error: Class 'Enemy' not found in /Applications/MAMP/htdocs/startupengineer/index.php:209
+Stack trace:
+#0 /Applications/MAMP/htdocs/startupengineer/view.php(1): require()
+#1 {main}
+  thrown in /Applications/MAMP/htdocs/startupengineer/index.php on line 209
+[15-Sep-2019 14:11:00 UTC] PHP Fatal error:  Uncaught Error: Class 'Enemy' not found in /Applications/MAMP/htdocs/startupengineer/index.php:209
+Stack trace:
+#0 /Applications/MAMP/htdocs/startupengineer/view.php(1): require()
+#1 {main}
+  thrown in /Applications/MAMP/htdocs/startupengineer/index.php on line 209
+[15-Sep-2019 14:11:59 UTC] PHP Fatal error:  Uncaught Error: Class 'Enemy' not found in /Applications/MAMP/htdocs/startupengineer/index.php:209
+Stack trace:
+#0 /Applications/MAMP/htdocs/startupengineer/view.php(1): require()
+#1 {main}
+  thrown in /Applications/MAMP/htdocs/startupengineer/index.php on line 209
+[15-Sep-2019 14:14:21 UTC] PHP Fatal error:  Uncaught Error: Class 'Enemy' not found in /Applications/MAMP/htdocs/startupengineer/index.php:209
+Stack trace:
+#0 /Applications/MAMP/htdocs/startupengineer/view.php(1): require()
+#1 {main}
+  thrown in /Applications/MAMP/htdocs/startupengineer/index.php on line 209
+[15-Sep-2019 14:15:17 UTC] PHP Fatal error:  Uncaught Error: Class 'Enemy' not found in /Applications/MAMP/htdocs/startupengineer/index.php:209
+Stack trace:
+#0 /Applications/MAMP/htdocs/startupengineer/view.php(1): require()
+#1 {main}
+  thrown in /Applications/MAMP/htdocs/startupengineer/index.php on line 209
+[15-Sep-2019 14:15:23 UTC] PHP Fatal error:  Uncaught Error: Class 'Enemy' not found in /Applications/MAMP/htdocs/startupengineer/index.php:209
+Stack trace:
+#0 {main}
+  thrown in /Applications/MAMP/htdocs/startupengineer/index.php on line 209
+[15-Sep-2019 14:17:29 UTC] PHP Fatal error:  Uncaught Error: Class 'Enemy' not found in /Applications/MAMP/htdocs/startupengineer/index.php:209
+Stack trace:
+#0 /Applications/MAMP/htdocs/startupengineer/view.php(1): require()
+#1 {main}
+  thrown in /Applications/MAMP/htdocs/startupengineer/index.php on line 209
+[15-Sep-2019 14:18:24 UTC] PHP Fatal error:  Uncaught Error: Class 'Enemy' not found in /Applications/MAMP/htdocs/startupengineer/index.php:209
+Stack trace:
+#0 /Applications/MAMP/htdocs/startupengineer/view.php(1): require()
+#1 {main}
+  thrown in /Applications/MAMP/htdocs/startupengineer/index.php on line 209
+[15-Sep-2019 14:22:06 UTC] PHP Fatal error:  Uncaught Error: Class 'Human' not found in /Applications/MAMP/htdocs/startupengineer/index.php:210
+Stack trace:
+#0 {main}
+  thrown in /Applications/MAMP/htdocs/startupengineer/index.php on line 210
+[15-Sep-2019 14:22:23 UTC] PHP Fatal error:  Uncaught Error: Class 'Human' not found in /Applications/MAMP/htdocs/startupengineer/index.php:210
+Stack trace:
+#0 {main}
+  thrown in /Applications/MAMP/htdocs/startupengineer/index.php on line 210

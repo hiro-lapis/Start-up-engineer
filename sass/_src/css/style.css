@@ -1,0 +1,61 @@
+body {
+  margin: 0 auto;
+  font-family: 'Kosugi Maru', sans-serif; }
+
+section#opening {
+  position: relative;
+  background-image: url(../../../img/cut109.png);
+  background-size: cover;
+  text-align: center;
+  background-position: 25px -35px; }
+
+.site-width {
+  width: 900px;
+  height: 507px;
+  margin: 0 auto; }
+
+.title {
+  position: absolute;
+  top: 80px;
+  width: 400px;
+  font-size: 30px; }
+
+.message-box {
+  background-color: #F8F8F8;
+  border-radius: 5px; }
+
+.bottom {
+  position: absolute;
+  bottom: 0;
+  left: 125px; }
+
+.start-btn-wrap {
+  position: absolute;
+  bottom: 112px;
+  left: 235px; }
+
+.btn {
+  border: none;
+  cursor: pointer;
+  padding: 10px 40px;
+  border-radius: 3px;
+  font-size: 20px; }
+  .btn.green {
+    background: #55D9D9; }
+    .btn.green.to-setting {
+      width: 100%; }
+
+section.setting {
+  background: #F2F2F2;
+  border-radius: 5px;
+  padding: 10px 20px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  line-height: 15px; }
+
+.setting-title {
+  margin-bottom: 60px; }
+
+.unique-wrap {
+  width: 280px;
+  float: left; }
