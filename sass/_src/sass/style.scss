@@ -1,16 +1,29 @@
 body{
-  margin: 0 auto;
+  background: #f6f5f4;
+  margin: 50px auto;
   font-family: 'Kosugi Maru', sans-serif;
 }
-$rightGray:#F2F2F2;
-$darkGray:#F8F8F8;
+$rightGray: #fff;
+$darkGray: #f8f8f8;
+$green: #55D9D9;
+$red: #f23d3d;
+$orange: #ff8a24;
+$yellow: #FFFF3F;
+$aqua: #26EBFF;
+
 //オープニング画面
 section#opening{
   position: relative;
   background-image: url(../../../img/cut109.png);
   background-size: cover;
+  background-color: $rightGray;
   text-align: center;
   background-position: 25px -35px;
+  :after{
+    clear: both;
+    display: block;
+    content: '';
+  }
 }
 .site-width{
   width: 900px;
@@ -35,8 +48,8 @@ section#opening{
 }
 .start-btn-wrap{
   position: absolute;
-  bottom: 112px;
-  left: 235px;
+  bottom: 136px;
+  left: 143px;
 }
 .btn{
   border: none;
@@ -45,26 +58,67 @@ section#opening{
   border-radius: 3px;
   font-size: 20px;
   &.green{
-    background: #55D9D9;
+    background: $green;
     &.to-setting{
       width: 100%;
     }
   }
 }
+.orange{
+  background-color: $orange;
+}
+.aqua{
+  background-color: $aqua;
+}
+.yellow{
+  background-color: $yellow;
+}
+.large{
+  padding: 20px 40px;
+}
+
 //セッティング画面
 section.setting{
   background: $rightGray;
   border-radius: 5px;
   padding: 10px 20px;
   box-sizing: border-box;
-  line-height: 15px;
+  line-height: 150%;
 }
 .setting-title{
   margin-bottom: 60px;
 }
-.unique-wrap{
-  width: 280px;
-  float: left;
+.setting-form{
+  margin-top: 50px;
 }
-input[type=radio]{
+
+.unique-wrap{
+  width: 100%;
+  height: 150px;
+  & label{
+    margin-left: 20px;
+    margin-right: 80px;
+    font-size: 19px;
+    float: left;
+    &:last-child{
+      margin-right: -60px;
+    }/*未解決*/
+    &:hover > .hover-display{
+        display: block;
+        transition: all 1s;
+    }
+     input[type="radio"]{
+    display: none;
+    }
+  }
+  .hover-display{
+    display: none;
+    transition: all 1s;
+    &:hover
+  }
+}
+
+.start{
+  position: relative;
+  left: 39%;
 }

@@ -1,13 +1,19 @@
 body {
-  margin: 0 auto;
+  background: #f6f5f4;
+  margin: 50px auto;
   font-family: 'Kosugi Maru', sans-serif; }
 
 section#opening {
   position: relative;
   background-image: url(../../../img/cut109.png);
   background-size: cover;
+  background-color: #fff;
   text-align: center;
   background-position: 25px -35px; }
+  section#opening :after {
+    clear: both;
+    display: block;
+    content: ''; }
 
 .site-width {
   width: 900px;
@@ -21,7 +27,7 @@ section#opening {
   font-size: 30px; }
 
 .message-box {
-  background-color: #F8F8F8;
+  background-color: #f8f8f8;
   border-radius: 5px; }
 
 .bottom {
@@ -31,8 +37,8 @@ section#opening {
 
 .start-btn-wrap {
   position: absolute;
-  bottom: 112px;
-  left: 235px; }
+  bottom: 136px;
+  left: 143px; }
 
 .btn {
   border: none;
@@ -45,17 +51,55 @@ section#opening {
     .btn.green.to-setting {
       width: 100%; }
 
+.orange {
+  background-color: #ff8a24; }
+
+.aqua {
+  background-color: #26EBFF; }
+
+.yellow {
+  background-color: #FFFF3F; }
+
+.large {
+  padding: 20px 40px; }
+
 section.setting {
-  background: #F2F2F2;
+  background: #fff;
   border-radius: 5px;
   padding: 10px 20px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
-  line-height: 15px; }
+  line-height: 150%; }
 
 .setting-title {
   margin-bottom: 60px; }
 
+.setting-form {
+  margin-top: 50px; }
+
 .unique-wrap {
-  width: 280px;
-  float: left; }
+  width: 100%;
+  height: 150px; }
+  .unique-wrap label {
+    margin-left: 20px;
+    margin-right: 80px;
+    font-size: 19px;
+    float: left; }
+    .unique-wrap label:last-child {
+      margin-right: -60px; }
+    .unique-wrap label input[type="radio"] {
+      display: none; }
+  .unique-wrap .hover-display {
+    display: none;
+    -webkit-transition: all 1s;
+    -o-transition: all 1s;
+    transition: all 1s; }
+    .unique-wrap .hover-display:hover {
+      display: block;
+      -webkit-transition: all 1s;
+      -o-transition: all 1s;
+      transition: all 1s; }
+
+.start {
+  position: relative;
+  left: 39%; }

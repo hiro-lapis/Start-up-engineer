@@ -1,0 +1,102 @@
+body {
+  margin: 0 auto;
+  font-family: 'Kosugi Maru', sans-serif;
+}
+
+section#opening {
+  position: relative;
+  background-image: url(../../../img/cut109.png);
+  background-size: cover;
+  text-align: center;
+  background-position: 25px -35px;
+}
+
+.site-width {
+  width: 900px;
+  height: 507px;
+  margin: 0 auto;
+}
+
+.title {
+  position: absolute;
+  top: 80px;
+  width: 400px;
+  font-size: 30px;
+}
+
+.message-box {
+  background-color: #F8F8F8;
+  border-radius: 5px;
+}
+
+.bottom {
+  position: absolute;
+  bottom: 0;
+  left: 125px;
+}
+
+.start-btn-wrap {
+  position: absolute;
+  bottom: 136px;
+  left: 143px;
+}
+
+.btn {
+  border: none;
+  cursor: pointer;
+  padding: 10px 40px;
+  border-radius: 3px;
+  font-size: 20px;
+}
+
+.btn.green {
+  background: #55D9D9;
+}
+
+.btn.green.to-setting {
+  width: 100%;
+}
+
+.large {
+  padding: 20px 40px;
+}
+
+section.setting {
+  background: #F2F2F2;
+  border-radius: 5px;
+  padding: 10px 20px;
+  box-sizing: border-box;
+  line-height: 15px;
+  line-height: 150%;
+}
+
+.setting-title {
+  margin-bottom: 60px;
+}
+
+.unique-wrap {
+  width: 280px;
+  float: left;
+}
+
+.unique-wrap label input[type="radio"] {
+  display: none;
+}
+
+.unique-wrap label input[type="radio"]:checked label.btn {
+  background-color: green;
+}
+
+.unique-wrap .hover-display {
+  display: none;
+  transition: all 1s;
+}
+
+.unique-wrap .hover-display:hover {
+  display: block;
+  transition: all 1s;
+}
+
+.btn .start {
+  text-align: center;
+}
