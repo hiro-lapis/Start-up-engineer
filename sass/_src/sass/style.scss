@@ -1,124 +1,430 @@
+//bootstrap準拠 https://getbootstrap.com/docs/4.3/getting-started/theming/#color
+$white: #f8f9fa;
+$gray-200: #e9ecef;//bootstrap
+$gray-300: #dee2e6;;//bootstrap
+$darkGray: #f8f8f8;
+$black: #444;
+$green: #55D9D9;
+$shadow-color: rgb(92, 127, 179);
+$message-border: rgba(255, 0, 129, .2);
+$button-op: rgba(255, 0, 129, .1);
+$red: #dc3545;
+$orange: #ff8a24;
+$yellow: #ffff3f;
+$aqua: #26ebff;
+$aliceBlue: #e0edff;//TODO 役割ごとに色をネーミングする
+
+
+//サイズ
+$sm: 30%;
+$md: 50%;
+$md-lg: 60%;
+$lg: 100%;
+//アニメーション関数
+@keyframes state-float1 {
+  0% {
+    transform: translateY(0px);
+    box-shadow: 0 8px 5px rgba(200, 0, 129, .1);
+  }
+  50% {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(200, 0, 129, .01);
+  }
+  100% {
+    transform: translateY(0px);
+    box-shadow: 0 8px 5px rgba(200, 0, 129, .1);
+  }
+}
+@keyframes fade-in {
+  0% {
+    display: none;
+    opacity: 0;
+  }
+
+  1% {
+    display: inline;
+    opacity: 0;
+  }
+
+  100% {
+    display: inline;
+    opacity: 1;
+  }
+}
+
+html{
+  font-size: 62.5%;
+}
 body{
-  background: #f6f5f4;
+  background: $gray-200;
   margin: 50px auto;
   font-family: 'Kosugi Maru', sans-serif;
+  font-size: 1.6em;
+  letter-spacing: 0.3em;
 }
-$rightGray: #fff;
-$darkGray: #f8f8f8;
-$green: #55D9D9;
-$red: #f23d3d;
-$orange: #ff8a24;
-$yellow: #FFFF3F;
-$aqua: #26EBFF;
+// // No media query necessary for xs breakpoint as it's effectively `@media (min-width: 0) { ... }`
+// @include media-breakpoint-up(sm) { ... }575px
+// @include media-breakpoint-up(md) { ... }
+// @include media-breakpoint-up(lg) { ... }991px
+// @include media-breakpoint-up(xl) { ... }
+//
+// // Example: Hide starting at `min-width: 0`, and then show at the `sm` breakpoint
+// .custom-class {
+//   display: none;
+// }
+// @include media-breakpoint-up(sm) {
+//   .custom-class {
+//     display: block;
+//   }
+// }
+//タイトル画面
 
-//オープニング画面
-section#opening{
-  position: relative;
-  background-image: url(../../../img/cut109.png);
-  background-size: cover;
-  background-color: $rightGray;
-  text-align: center;
-  background-position: 25px -35px;
-  :after{
-    clear: both;
-    display: block;
-    content: '';
-  }
-}
+//レイアウト
 .site-width{
-  width: 900px;
-  height: 507px;
+  position: relative;
+  width: 980px;
+  height: 551px;
   margin: 0 auto;
+  background-size: cover;
+  background-color: $white;
 }
-.title{
-  position: absolute;
-  top: 80px;
-  width: 400px;
-  font-size: 30px;
-}
-.message-box{
-  background-color: $darkGray;
-  border-radius: 5px;
-}
-.bottom{
-  position: absolute;
-  bottom: 0;
-  left: 125px;
-
-}
-.start-btn-wrap{
-  position: absolute;
-  bottom: 136px;
-  left: 143px;
-}
-.btn{
-  border: none;
-  cursor: pointer;
-  padding: 10px 40px;
-  border-radius: 3px;
-  font-size: 20px;
-  &.green{
-    background: $green;
-    &.to-setting{
-      width: 100%;
+.op{
+  &-img{
+    background-image: url(../../../img/cut109.png);
+    &-logo{
+    }
+    &:after{
+      clear: both;
+      display: block;
+      content: '';
     }
   }
 }
-.orange{
-  background-color: $orange;
-}
-.aqua{
-  background-color: $aqua;
-}
-.yellow{
-  background-color: $yellow;
-}
-.large{
-  padding: 20px 40px;
+.message{
+  border: double .3rem rgba(255, 0, 129, .2);
+  border-radius: 5px;
+  letter-spacing: 0.17em;
+  display: flex;
+  flex-direction: column;
+  padding-left: 10px;
+  letter-spacing: 0.1em;
+  border: solid 1px #fff;
+  &-opening{
+    box-sizing: border-box;
+    background: $gray-200;
+    font-size: 1.7rem;
+    position: absolute;
+    bottom: 0;
+    &__large{
+      width: $lg;
+    }
+  }
+  &-setting{
+    box-sizing: border-box;
+    font-size: 1.7rem;
+    position: relative;
+    top: -10%;
+    margin: 0 auto;
+    &__middle{
+      width: $md;
+    }
+  }
+  &-action{
+
+  }
+  &__small{
+    width: $sm;
+  }
+  &__large{
+    width: $lg;
+  }
+  &__bottom{
+    position: absolute;
+    bottom: 0;
+  }
 }
 
-//セッティング画面
-section.setting{
-  background: $rightGray;
-  border-radius: 5px;
-  padding: 10px 20px;
-  box-sizing: border-box;
-  line-height: 150%;
+.btn{
+  &-setting{
+    font-size: 3rem;
+    border-radius: 13rem;
+    width: 25rem;
+    height: 25rem;
+    background-color: $button-op;
+    border: dashed 1px #fff;
+    cursor: pointer;
+    position: relative;
+    margin: 15px;
+    animation:{
+      name: state-float1;
+      duration: 4s;
+      timing-function: ease;
+      iteration-count: infinite;
+    }
+    &:hover{
+      box-shadow: 0 2px 25px rgba(255, 0, 130, 0.5);
+    }
+  }
+}
+
+//セッティング
+.container-setting{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+#js-bg{
+  position: absolute;
+  top: 15%;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  transition: .8s;
+  background-repeat: no-repeat;
+  &.trainee{
+    background-image: url(../../../img/setting-trainee.png);
+    background-position-x: 346px;
+  }
+  &.humor{
+    background-image: url(../../../img/setting-humor.png);
+    background-position-x: -346px;
+  }
+  &.inspi{
+    background-image: url(../../../img/setting-inspiration.png);
+    background-position-Y: 150px;
+  }
 }
 .setting-title{
-  margin-bottom: 60px;
+  font-size: 3.5rem;
 }
-.setting-form{
-  margin-top: 50px;
-}
-
-.unique-wrap{
-  width: 100%;
-  height: 150px;
-  & label{
-    margin-left: 20px;
-    margin-right: 80px;
-    font-size: 19px;
-    float: left;
-    &:last-child{
-      margin-right: -60px;
-    }/*未解決*/
-    &:hover > .hover-display{
-        display: block;
-        transition: all 1s;
-    }
-     input[type="radio"]{
-    display: none;
-    }
+.wrap-btn{
+  &__setting{
+    display: flex;
+    justify-content: space-around;
+    width: $lg;
   }
-  .hover-display{
-    display: none;
-    transition: all 1s;
-    &:hover
+  &__submit{
+    width: 20%;
+    height: 10%;
+    margin: 0 auto;
   }
 }
 
-.start{
+.button{
+  padding: 1.2rem 1.4rem;
+  border-radius: 5px;
+  font-size: 1.5rem;
+  color: $gray-300;
+  box-shadow: 1px 1px 5px;
+  transition: .3s;
+  &:hover{
+    transform: translateY(2px);
+    box-shadow: 0 2px 25px ;
+    color: $gray-200;
+  }
+  &:checked{
+    transform: scale(1.2);
+  }
+  &-radio__trainee{
+    background-color: rgba($red, 0.8);
+  }
+  &-radio__humor{
+    color: $white;
+    background-color: rgba($yellow, 0.8);
+  }
+  &-radio__inspiration{
+    color: $white;
+    background-color: rgba($aqua, 0.8);
+  }
+  .input-radio__hide{
+    display: none;
+  }
+}
+.wrap-radio{
+  display: flex;
+  justify-content: space-around;
+  align-items: start;
+  width: $md-lg;
   position: relative;
-  left: 39%;
+  right: 1%;
+  height: 120px;
+}
+
+.hidden{
+  display: none;
+  text-align: left;
+  letter-spacing: .5rem;
+  line-height: 150%;
+  padding: 5px;
+  background: $aliceBlue;
+  border-radius: 10px;
+  position: absolute;
+  top: 6rem;
+  transition: all 0.5s;
+  animation-duration: 0.5s;
+  &:before {
+    content: "";
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    margin-left: -15px;
+    border: 15px solid transparent;
+    border-bottom: 15px solid $aliceBlue;
+  }
+  &.train{
+    left: -3rem;
+  }
+  &.humor{
+    left: 19.5rem;
+  }
+  &.inspiration{
+    left: 41rem;
+  }
+}
+
+.visible{
+  display: inline;
+  opacity: 1;
+  animation-duration: all 0.5s;
+  transition: 0.5s;
+  animation-name: fade-in;
+}
+
+//アクション
+.main-display{
+  display: flex;
+     flex-direction: column;
+  width: 100%;
+    height: 100%;
+}
+.charcters-box{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 50%;
+}
+.character-box{
+  width: 25%;
+  height: 100%;
+  border: dashed 1px #444;
+}
+.character{
+&-img{
+  &__box{
+    width: 80%;
+    height: 70%;
+    border-radius: 10rem;
+    overflow: hidden;
+    margin: 0 auto;
+  }
+  &__hero{
+    position: relative;
+    left: -7rem;
+    top: 2rem;
+    width: 190%;
+    background: $white;
+  }
+  &__enemy{
+    transform: scale(-1, 1);
+    position: relative;
+    left: -11rem;
+    top: 2rem;
+    width: 190%;
+    background: $white;
+   }
+  }
+
+  &-status{
+    width: 100%;
+    height: 30%;
+    font-size: 1.6rem;
+  }
+}
+
+
+.system-box{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 50%;
+
+  .command-box{
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    width: 25%;
+    height: 100%;
+    .button{
+      width: 100%;
+      height: 20%;
+      transition: .4s;
+      &:hover{
+        transform: scale(1.1);
+      }
+      &.attack{
+        background: $red;
+      }
+      &.coding{
+        background: $aqua;
+      }
+      &.training{
+        background: $orange;
+      }
+      &.rest{
+        background: $green;
+      }
+
+    }
+  }
+
+  .message-box{
+    width:70%;
+    height: 100%;
+    padding: 1.5rem 2rem;
+    font-size: 1.6rem;
+    overflow-y: scroll;
+  }
+}
+
+
+
+//js関連クラス
+
+//アクションフェーズ
+.js-modal{
+  &-body{
+    display: none;
+    z-index: 2;
+    position: absolute;
+    top: 10%;
+    left: 0%;
+    width: 50%;
+    background: #f6f5f4; //TODO変数
+    border: 1px solid #444; //TODO変数
+    border-radius: 5px;
+    padding: 5px;
+}
+  &-btn{
+    position: absolute;
+    bottom: 0;
+    cursor: pointer;
+    color: white;
+    background: #444; //TODO変数適用
+    border-radius: 5px;
+    width: 100%;
+    height: 15%;
+    padding: 15px;
+}
+  &-cover{
+    display: none;
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #8d8d8d; //TODO 変数適用
+    opacity: .4;
+}
 }
