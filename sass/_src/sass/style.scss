@@ -26,26 +26,27 @@ $lg: 100%;
     transform: translateY(0px);
     box-shadow: 0 8px 5px rgba(200, 0, 129, .1);
   }
+
   50% {
     transform: translateY(-5px);
     box-shadow: 0 10px 15px rgba(200, 0, 129, .01);
   }
+
   100% {
     transform: translateY(0px);
     box-shadow: 0 8px 5px rgba(200, 0, 129, .1);
   }
 }
+
 @keyframes fade-in {
   0% {
     display: none;
     opacity: 0;
   }
-
   1% {
     display: inline;
     opacity: 0;
   }
-
   100% {
     display: inline;
     opacity: 1;
@@ -55,29 +56,15 @@ $lg: 100%;
 html{
   font-size: 62.5%;
 }
+
 body{
   background: $gray-200;
-  margin: 50px auto;
+  margin: 2rem auto;
   font-family: 'Kosugi Maru', sans-serif;
   font-size: 1.6em;
   letter-spacing: 0.3em;
 }
-// // No media query necessary for xs breakpoint as it's effectively `@media (min-width: 0) { ... }`
-// @include media-breakpoint-up(sm) { ... }575px
-// @include media-breakpoint-up(md) { ... }
-// @include media-breakpoint-up(lg) { ... }991px
-// @include media-breakpoint-up(xl) { ... }
-//
-// // Example: Hide starting at `min-width: 0`, and then show at the `sm` breakpoint
-// .custom-class {
-//   display: none;
-// }
-// @include media-breakpoint-up(sm) {
-//   .custom-class {
-//     display: block;
-//   }
-// }
-//タイトル画面
+
 
 //レイアウト
 .site-width{
@@ -88,6 +75,7 @@ body{
   background-size: cover;
   background-color: $white;
 }
+
 .op{
   &-img{
     background-image: url(../../../img/cut109.png);
@@ -100,13 +88,13 @@ body{
     }
   }
 }
+
 .message{
   border: double .3rem rgba(255, 0, 129, .2);
   border-radius: 5px;
   letter-spacing: 0.17em;
   display: flex;
   flex-direction: column;
-  padding-left: 10px;
   letter-spacing: 0.1em;
   border: solid 1px #fff;
   &-opening{
@@ -123,8 +111,7 @@ body{
     box-sizing: border-box;
     font-size: 1.7rem;
     position: relative;
-    top: -10%;
-    margin: 0 auto;
+    margin: 5rem auto;
     &__middle{
       width: $md;
     }
@@ -174,9 +161,9 @@ body{
   justify-content: center;
   text-align: center;
 }
+
 #js-bg{
   position: absolute;
-  top: 15%;
   width: 100%;
   height: 100%;
   background-size: cover;
@@ -195,9 +182,11 @@ body{
     background-position-Y: 150px;
   }
 }
+
 .setting-title{
   font-size: 3.5rem;
 }
+
 .wrap-btn{
   &__setting{
     display: flex;
@@ -205,9 +194,10 @@ body{
     width: $lg;
   }
   &__submit{
-    width: 20%;
-    height: 10%;
-    margin: 0 auto;
+    position: relative;
+    left: -10px;
+    width: $sm;
+    margin: 2rem auto;
   }
 }
 
@@ -241,11 +231,12 @@ body{
     display: none;
   }
 }
+
 .wrap-radio{
   display: flex;
   justify-content: space-around;
   align-items: start;
-  width: $md-lg;
+  width: $md - 5;
   position: relative;
   right: 1%;
   height: 120px;
@@ -260,7 +251,7 @@ body{
   background: $aliceBlue;
   border-radius: 10px;
   position: absolute;
-  top: 6rem;
+  top: 6.3rem;
   transition: all 0.5s;
   animation-duration: 0.5s;
   &:before {
@@ -272,14 +263,14 @@ body{
     border: 15px solid transparent;
     border-bottom: 15px solid $aliceBlue;
   }
-  &.train{
-    left: -3rem;
-  }
   &.humor{
-    left: 19.5rem;
+    left: -3.6rem;
   }
   &.inspiration{
-    left: 41rem;
+    left: 4.8rem;
+  }
+  &.train{
+    left: 28rem;
   }
 }
 
@@ -294,61 +285,72 @@ body{
 //アクション
 .main-display{
   display: flex;
-     flex-direction: column;
+  flex-direction: column;
   width: 100%;
-    height: 100%;
+  height: 100%;
 }
-.charcters-box{
+
+.characters-box{
   display: flex;
   justify-content: space-between;
   width: 100%;
   height: 50%;
 }
+
 .character-box{
   width: 25%;
   height: 100%;
-  border: dashed 1px #444;
 }
-.character{
-&-img{
-  &__box{
-    width: 80%;
-    height: 70%;
-    border-radius: 10rem;
-    overflow: hidden;
-    margin: 0 auto;
-  }
-  &__hero{
-    position: relative;
-    left: -7rem;
-    top: 2rem;
-    width: 190%;
-    background: $white;
-  }
-  &__enemy{
-    transform: scale(-1, 1);
-    position: relative;
-    left: -11rem;
-    top: 2rem;
-    width: 190%;
-    background: $white;
-   }
-  }
 
+.character{
+  &-img{
+    &__box{
+      width: 80%;
+      height: 70%;
+      border-radius: 10rem;
+      overflow: hidden;
+      margin: 0 auto;
+      border: dashed 2px $gray-300;
+      &.0{
+        border: dashed 2px $yellow;
+      }
+      &.1{
+        border: dashed 2px $aqua;
+      }
+      &.2,
+      &.3{
+        border: dashed 2px $red;
+      }
+    }
+    &__hero{
+      position: relative;
+      left: -7rem;
+      top: 2rem;
+      width: 190%;
+      background: $white;
+    }
+    &__enemy{
+      transform: scale(-1, 1);
+      position: relative;
+      left: -11rem;
+      top: 2rem;
+      width: 190%;
+      background: $white;
+    }
+  }
   &-status{
     width: 100%;
     height: 30%;
     font-size: 1.6rem;
+    padding-left: 5px;
   }
 }
-
 
 .system-box{
   display: flex;
   justify-content: space-between;
   width: 100%;
   height: 50%;
-
   .command-box{
     position: relative;
     display: flex;
@@ -374,10 +376,8 @@ body{
       &.rest{
         background: $green;
       }
-
     }
   }
-
   .message-box{
     width:70%;
     height: 100%;
@@ -387,24 +387,24 @@ body{
   }
 }
 
-
-
 //js関連クラス
 
-//アクションフェーズ
+
+
+//action
 .js-modal{
   &-body{
     display: none;
     z-index: 2;
     position: absolute;
     top: 10%;
-    left: 0%;
+    left: 25%;
     width: 50%;
     background: #f6f5f4; //TODO変数
     border: 1px solid #444; //TODO変数
     border-radius: 5px;
     padding: 5px;
-}
+  }
   &-btn{
     position: absolute;
     bottom: 0;
@@ -412,10 +412,10 @@ body{
     color: white;
     background: #444; //TODO変数適用
     border-radius: 5px;
-    width: 100%;
+    width: 50%;
     height: 15%;
     padding: 15px;
-}
+  }
   &-cover{
     display: none;
     z-index: 1;
@@ -426,5 +426,5 @@ body{
     height: 100%;
     background: #8d8d8d; //TODO 変数適用
     opacity: .4;
-}
+  }
 }
