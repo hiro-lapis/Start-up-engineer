@@ -18,9 +18,9 @@ function debug($str){
 //定数
 //個性(クラス定数）
 class Unique{
-  const Trainee = 1;
-  const Humor = 2;
-  const Inspiration = 3;
+  const Trainee = 'train';
+  const Humor = 'humor';
+  const Inspiration = 'inspi';
 }
 //////////////////////////////////////////////////
 //各種変数定義
@@ -30,12 +30,11 @@ $hero = array();
 $enemys = array();
 
 //各種フラグ（phase順）
-$restartFlg = 0;//初めて画面に繊維してきたか、リスタートボタンを押した時
-$settingFlg = 0;//キャラクター設定が終わった
-$startFlg = 0;//スタートボタンを押した時
-$actionFlg = 0;//毎ターンのアクションコマンドがある時
-$eventFlg = 0;//アクションコマンドの後1/4の確率でtrue,次ターンの冒頭に発生
-$resultFlg = 0;//amountが3000以上でtrue。SESSION内のattMin(筋肉度)、quality,日数でエンディング分岐).$_SESSION['turnCount']);
+$settingFlg = '';//キャラクター設定が終わった
+$startFlg = '';//スタートボタンを押した時
+$actionFlg = '';//毎ターンのアクションコマンドがある時
+$eventFlg = '';//アクションコマンドの後1/4の確率でtrue,次ターンの冒頭に発生
+$resultFlg = '';//amountが3000以上でtrue。SESSION内のattMin(筋肉度)、quality,日数でエンディング分岐).$_SESSION['turnCount']);
 
 //////////////////////////////////////////////////
 //抽象クラス + 各種クラス設定
@@ -142,7 +141,6 @@ class Hero extends Humans{
     Product::setAmount($codingPoint);
     $damagePoint = mt_rand(10, 40);
     $this->hp -= $damagePoint;
-    History::set('疲れで'.$damagePoint.'HPが減った');
     History::set($codingPoint.'行のコードを打った！'."\n".'疲れで'.$damagePoint.'HPが減った');
     //TODO開発時表示　 debug(print_r($_SESSION['product']));
   }
@@ -175,7 +173,7 @@ class Hero extends Humans{
       History::set('ベンチプレス、デッドリフト、スクワットのフルコース！');
       History::set('向かうところ敵なしだ！');
     }
-    $trainPoint = mt_rand(1, 3);
+    $trainPoint = mt_rand(3, 6);
     $damagePoint = mt_rand(10, 30);
     $this->attackMin += $trainPoint;
     $this->hp -= $damagePoint;
@@ -185,7 +183,7 @@ class Hero extends Humans{
   //actionコマンド④レスト
   public function rest(){
     History::set('煮詰まったから休憩・・・');
-    $this->setHp($this->hp + mt_rand(50, 100));
+    $this->setHp($this->hp + mt_rand(100, 150));
     History::set('体力が回復した！');
 
     $criticalPoint = 9 - $this->critical;
@@ -382,24 +380,24 @@ class Product implements ProductInterface{
       History::set('でも、楽しさなんて後回し まずはやり切ろう！');
       self::setAmountCount();
     }
-    if($_SESSION['product']['amount'] > 2500 && $_SESSION['product']['amountCount'] === 4){
+    if($_SESSION['product']['amount'] > 2100 && $_SESSION['product']['amountCount'] === 4){
       History::set('バグは取り終えた！後はサーバーにアップするだけだ');
-      History::set('私がこのサービスを公開しなければ、地球に隕石が落ちる');
-      History::set('眠たい目をこすりつつ、デプロイ作業に取り掛かった！');
+      History::set('サーバーのことはこれまで調べて来なかったので、どうすればいいのかよくわからない');
+      History::set('ここまできたら、やるしかない！、デプロイ作業に取り掛かった');
       self::setAmountCount();
     }
   }
 
   public static function sayQuality(){
-    if($_SESSION['product']['quality'] > 3 && $_SESSION['product']['qualityCount'] === 0){
+    if($_SESSION['product']['quality'] > 2 && $_SESSION['product']['qualityCount'] === 0){
       History::set('とりあえず及第点くらいの成果物にはなりそうだ');
       self::setQualityCount();
     }
-    if($_SESSION['product']['quality'] > 5 && $_SESSION['product']['qualityCount'] === 1){
+    if($_SESSION['product']['quality'] > 4 && $_SESSION['product']['qualityCount'] === 1){
       History::set('かなりイケてるアプリになりそうだ！');
       self::setQualityCount();
     }
-    if($_SESSION['product']['quality'] > 8 && $_SESSION['product']['qualityCount'] === 2){
+    if($_SESSION['product']['quality'] > 6 && $_SESSION['product']['qualityCount'] === 2){
       History::set('とんでもないWebサービスを作ってしまったかもしれない！');
       self::setQualityCount();
     }
@@ -461,44 +459,56 @@ class Event implements EventInterface{
   }
 
   public static function resultCheck(){
-    //エンディングの優先順位//バッド > マッスル > ハッピー > グッド
     global $resultFlg;
-    if($_SESSION['turnCount'] > 29 ){
+    //エンディングの優先順位//バッド > マッスル > ハッピー > グッド
+    if($_SESSION['turnCount'] > 49 ){
       //時間切れエンド
-      $resultFlg = 'bad-end1';
+      $resultFlg = true;
+      $_SESSION['resultTitle'] = 'バッドエンド';
+      $_SESSION['resultImg'] = 'bad-end1';
       History::clear();
-      History::set('アイちゃんは仕事をこなすので精一杯。');
-      History::set('エンジニアになる日はまだまだ遠そうだ・・・');
+      History::set('仕事の忙しさで、プログラミングのことを忘れてしまった・・・');
+      History::set('エンジニアになる日はいつになることやら・・・');
     } elseif($_SESSION['hero']->getHp() < 0 ){
       //挫折エンド
-      $resultFlg = 'bad-end2';
+      $resultFlg = true;
+      $_SESSION['resultTitle'] = 'バッドエンド';
+      $_SESSION['resultImg'] = 'bad-end2';
       History::clear();
       History::set('アイちゃんは疲れ果て、挫折してしまった・・・');
-    } elseif($_SESSION['hero']->getName() === 'Muscle AI'){
-      //マッスルエンド
-      $resultFlg = 'muscle-end';
-      History::clear();
-      History::set('おめでとう！アイちゃんは立派なボディビルダーになった！');
-    } elseif ($_SESSION['product']['quality'] > 7 && $_SESSION['product']['amount']){
-      //ハッピーエンド
-      $resultFlg = 'happy-end';
-      History::clear();
-      History::set('おめでとう！');
-      History::set('素晴らしいポートフォリオのお陰で、憧れの会社から内定をもらえた');
-      History::set('新たにWebサービスを作りたいし、新しい技術も学びたい！');
-      History::set('輝かしいエンジニアキャリアが、これから始まる！');
-    } elseif ($_SESSION['product']['quality'] > 4){
+////////ここからクリア分岐//////////////////////////
+}  elseif ($_SESSION['product']['amount'] > 2300){
+        if($_SESSION['hero']->getName() === 'Muscle AI'){
+        //マッスルエンド
+        $resultFlg = true;
+        $_SESSION['resultTitle'] = 'マッスルエンド！';
+        $_SESSION['resultImg'] = 'muscle-end';
+        History::clear();
+        History::set('おめでとう！アイちゃんは立派なボディビルダーになった！');
+      } elseif ($_SESSION['product']['quality'] > 5) {
+        //ハッピーエンド
+        $resultFlg = true;
+        $_SESSION['resultTitle'] = 'ハッピーエンド';
+        $_SESSION['resultImg'] = 'happy-end';
+        History::clear();
+        History::set('おめでとう！');
+        History::set('素晴らしいポートフォリオのお陰で、憧れの会社から内定をもらえた');
+        History::set('新たにWebサービスを作りたいし、新しい技術も学びたい！');
+        History::set('輝かしいエンジニアキャリアが、これから始まる！');
+      } else {
       //グッドエンド
-      $resultFlg = 'good-end';
+      $resultFlg = true;
+      $_SESSION['resultTitle'] = 'グッドエンド';
+      $_SESSION['resultImg'] = 'good-end';
       History::clear();
       History::set('おめでとう、ポートフォリオのお陰で面接のアポをとれた！');
       History::set('これから先もがんばっていこう！');
-    } else {
-      $resultFlg = false;
     }
+    debug('リザルト判定:'.$resultFlg);
+    debug('リザルト種類:'.$_SESSION['result']);
   }
 }
-
+}
 
 //Historyクラス
 interface HistoryInterface{
@@ -520,41 +530,48 @@ class History implements HistoryInterface {
 //////////////////////////////////////////////////
 //インスタンス生成
 
-$heros[] = new Hero ('アイ', 'img/bustup/ai01.png', 500, 60, 1, Unique::Trainee);
-$heros[] = new Hero ('アイ', 'img/bustup/humor.png', 700, 40, 2, Unique::Humor);
-$heros[] = new Hero ('アイ', 'img/bustup/ai02.png', 400, 30, 5, Unique::Inspiration);
+$heros[] = new Hero ('アイ', 'img/bustup/hero-humor.png', 1000, 40, 2, Unique::Humor);
+$heros[] = new Hero ('アイ', 'img/bustup/hero-inspi.png', 500, 30, 5, Unique::Inspiration);
+$heros[] = new Hero ('アイ', 'img/bustup/hero-trainee.png', 800, 60, 1, Unique::Trainee);
 $heros[] = new HeroMuscle ('Muscle AI', 'img/bustup/muscle.png', 5000, 500, 3, Unique::Trainee);
 $enemys[] = new Enemy ('お騒がせ上司', 'img/bustup/enemy01.png', 200, 20, 30, 1);
-$enemys[] = new Enemy ('食べ過ぎ同期', 'img/bustup/enemy02.png', 500, 20, 40, 1);
-$enemys[] = new Enemy ('サボりグセ後輩', 'img/bustup/enemy03.png', 300, 10, 30, 3);
-$enemys[] = new Enemy ('マウント上司', 'img/bustup/enemy04.png', 500, 30, 40, 3);
-$enemys[] = new Enemy ('弱気な自分', 'img/bustup/ai04.png', 1000, 50, 100, 2);
-$enemys[] = new Enemy ('普通の上司', 'img/bustup/enemy05.png', 10000, 0, 10, 0);
+$enemys[] = new Enemy ('食べ過ぎ同期', 'img/bustup/enemy02.png', 300, 20, 40, 1);
+$enemys[] = new Enemy ('サボりグセ後輩', 'img/bustup/enemy03.png', 400, 10, 30, 3);
+$enemys[] = new Enemy ('マウント上司', 'img/bustup/enemy04.png', 400, 30, 40, 3);
+$enemys[] = new Enemy ('弱気な自分', 'img/bustup/enemy05.png', 600, 40, 80, 2);
+$enemys[] = new Enemy ('普通の上司', 'img/bustup/enemy06.png', 10000, 0, 10, 0);
 
 //////////////////////////////////////////////////
 //Heroインスタンス作成
 function createHero($num){
   global $heros;
   $_SESSION['hero'] = $heros[$num];
-  debug('初期ステータス:'.print_r($_SESSION['hero']));
 }
 
 function heroCheck(){
+  debug($_SESSION['hero']->getImg());
+  debug($_SESSION['hero']->getAttMin());
   switch ($_SESSION['hero']) {
     case $_SESSION['hero']->getHp() < 0:
       $resultFlg = true;
       break;
     case $_SESSION['hero']->getAttMin() >= 100:
-     if(!$_SESSION['hero']->getName() === 'Muscle AI'){ createHero(3);}
+     if($_SESSION['hero']->getName() !== 'Muscle AI'){
+     createHero(3);
      History::set('アイちゃんはついに限界を超え、最強のカラダを手にした！');
+   }
       break;
     case $_SESSION['hero']->getHp() < 100:
-      if(!$_SESSION['hero']->getImg() === 'img/bustup/pinch.png'){ $_SESSION['hero']->setImg('img/bustup/pinch.png');}
+      if($_SESSION['hero']->getImg() !== 'img/bustup/pinch.png'){
+        debug('主人公のimgを書きかえます');
+         $_SESSION['hero']->setImg('img/bustup/hero-pinch.png');}
+         debug($_SESSION['hero']->getImg());
       break;
     case $_SESSION['hero']->getHp() > 100:
-      if($_SESSION['hero']->getImg() === 'img/bustup/pinch.png'){ $_SESSION['hero']->setImg('img/bustup/ai01.png');}
+      if($_SESSION['hero']->getImg() === 'img/bustup/hero-pinch.png'){ $_SESSION['hero']->setImg('img/bustup/hero-'.$_SESSION['imgPath'].'.png');}
       //$_SESSION['hero']->setImg('img/bustup/ai'.$_SESSION['unique'].'png');
       //uniqueボタンの値を残して置いて、回復時のイメージ戻しに使用
+      //TODO
       break;
   }
 }
@@ -565,7 +582,7 @@ function heroCheck(){
 function createEnemy($count = 0){
   global $enemys;
   $_SESSION['enemy'] = $enemys[$count];
-  debug('エネミーのステータス:'.print_r($_SESSION['enemy']));
+  //TODO debug('エネミーのステータス:'.print_r($_SESSION['enemy']));
   switch ($_SESSION['enemy']->getName()) {
     case '弱気な自分':
       History::set('今度は'.$_SESSION['enemy']->getName().'と向き合うことになった！');
@@ -631,8 +648,6 @@ if(empty($_POST || $_POST['restart'])){
   debug('eventフラグ:'.$eventFlg);
   debug('resultフラグ:'.$resultFlg);
 
-  debug('現在のターン:'.$_SESSION['turnCount']);
-  debug('倒した敵の数:'.$_SESSION['enemyCount']);
 }
 
 /////////////////////////////////////////////////
@@ -659,14 +674,17 @@ if($restartFlg){
 if($startFlg){
   debug('セッテイング処理を始めます');
   switch($_POST['unique']){
-    case 'trainee':
+    case 'humor':
+    $_SESSION['imgPath'] = 'humor';
     $_SESSION['unique'] = 0;
     break;
-    case 'humor':
-    $_SESSION['unique'] = 1;
-    break;
     case 'inspiration':
+    $_SESSION['unique'] = 1;
+    $_SESSION['imgPath'] = 'inspi';
+    break;
+    case 'trainee':
     $_SESSION['unique'] = 2;
+    $_SESSION['imgPath'] = 'trainee';
     break;
   }
   init();
@@ -718,6 +736,7 @@ if($startFlg){
   $_SESSION['enemy']->attack($_SESSION['hero']);
   $_SESSION['turnCount'] = $_SESSION['turnCount'] + 1;
 }
+debug('主人公の状態を確認します');
 heroCheck();
 Event::resultCheck();
 }
@@ -775,7 +794,7 @@ crossorigin="anonymous"></script>
 
 
         <div class="message message-setting message-setting__middle">
-          <h2 class="setting-title">ユニークセレクト</h2>
+          <h2 class="font-title">ユニークセレクト</h2>
           <p>ユニークによって主人公の能力値が変わります</p>
           <p>迷ったら、とりあえずを筋トレをしておきましょう！</p>
         </div>
@@ -791,14 +810,14 @@ crossorigin="anonymous"></script>
                 <label class="button button-radio__humor">
                   <input class="js-showbg input-radio__hide" data-unique="humor" type="radio" name="unique" value="humor"><i class="far fa-grin-squint"></i>ユーモア
                 </label>
-                <span class="hidden humor">面白きことは良きことなり！<br>精神的にタフなので<br>HPが高いです</span>
+                <span class="hidden humor">面白きことはよきことなり！<br>楽観的なので<br>HPが高いです</span>
               </div>
 
               <div class="js-hover__disp">
                 <label class="button button-radio__inspiration">
                   <input class="js-showbg input-radio__hide" data-unique="inspi" type="radio" name="unique" value="inspiration"><i class="fas fa-bolt"></i>ひらめき
                 </label>
-                <span class="hidden inspiration">ねぼすけ(HP低)   だけど、やればできる子です</span>
+                <span class="hidden inspiration">ねぼすけ(HP低)<br>だけど、やればできる子です</span>
               </div>
 
               <div class="js-hover__disp">
@@ -815,15 +834,19 @@ crossorigin="anonymous"></script>
     </section>
   <?php  } elseif ($resultFlg) { ?>
 
-    <section  class="site-width <?php echo $resultTitle; ?>">
-      <h1 > <?php echo $resultTitle; ?></h1>
-      <div class="message-box bottom">
-        <p><?php echo (!empty($_SESSION['history'])) ? $_SESSION['history'] : ''; ?></p>
+    <section  class="site-width result" style="<?php echo 'background-image: url(img/result/'.$_SESSION['resultImg'].'.png'; ?>);">
+      <!-- <div class="js-snowfall" data-result="php echo $_SESSION['resultTitle']; "> -->
+      <div class="wrap-title">
+        <h1 class="font-title"> <?php echo $_SESSION['resultTitle']; ?></h1>
       </div>
-      <form method="post">
-        <button type="submit" name="restart" value="restart">OPへ戻る</button>
-      </form>
+      <div class="box-result box-result__message">
+        <p><?php echo (!empty($_SESSION['history'])) ? $_SESSION['history'] : ''; ?></p>
+        <form class="btn-reset" method="post">
+          <button class="btn btn-outline-success" type="submit" name="restart" value="restart">OPへ戻る</button>
+        </form>
+      </div>
 
+      <!-- </div> -->
     </section>
 
 
@@ -848,22 +871,25 @@ crossorigin="anonymous"></script>
             <li>HP:0になるとゲームオーバー（敵を倒せる）です</li>
             <li>パワー:高いほどアタック、コーディング力がアップ</li>
           </ul>
-          <li>＊注意＊</li>
+          <li>＊ヒント＊</li>
           <ul>
             <li>目的は<strong>ポートフォリオを完成させること</strong>です</li>
             <li>仕事をがんばるのは程々にしておきましょう</li>
           </ul>
         </ol>
         <button class="js-cancel-btn">閉じる</button>
+        <form method="post">
+          <button class="btn btn-warning" type="submit" name="restart" value="restart">リセット</button>
+        </form>
       </div>
       <div class="js-modal-cover"></div>
 
       <div class="main-display">
-
+        <span><?php echo $_SESSION['turnCount']; ?>日目</span>
         <div class="characters-box">
 
           <div class="character-box">
-            <div class="character-img__box <?php echo $_SESSION['unique']; ?>">
+            <div class="character-img__box <?php echo $_SESSION['hero']->getUnique(); ?>">
               <img class="js-hero-icon character-img__hero" src="<?php echo $_SESSION['hero']->getImg(); ?>" alt="主人公アイコン">
             </div>
             <div class="character-status">
@@ -878,7 +904,7 @@ crossorigin="anonymous"></script>
             </div>
             <div class="character-status">
               <p class="state"> Name: <?php echo $_SESSION['enemy']->getName(); ?></p>
-              <p class="state">HP:<?php echo $_SESSION['enemy']->getHp(); ?> パワー: <?php echo $_SESSION['enemy']->getAttMin(); ?></p>
+              <p class="state">タスク:<?php echo $_SESSION['enemy']->getHp(); ?> パワー: <?php echo $_SESSION['enemy']->getAttMin(); ?></p>
             </div>
           </div>
         </div>
@@ -893,7 +919,7 @@ crossorigin="anonymous"></script>
               <button class="button training"type="submit" name="action" value="training">筋トレ</button>
               <button class="button rest"type="submit" name="action" value="rest">レスト</button>
             </form>
-            <button class="js-modal-btn">HELP</button>
+            <button class="js-modal-btn">ヘルプ/リセット</button>
           </div>
 
           <div class="message-box js-auto-scroll">

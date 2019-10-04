@@ -38,10 +38,6 @@ $(function(){
 
   modalBtn.on('click', function() {
     console.log('On');//TODO　本番消去
-    var modalWidth = $('.js-modal-body').width();//モーダルの大きさ
-    var windowWidth = $(window).width();//ウィンドウの大きさ
-    modalBody.attr('style',
-    'margin-left: ' + (windowWidth/2 - modalWidth/2) + 'px' );
     modalBody.fadeIn();
     modalCover.fadeIn();
   });
@@ -68,10 +64,16 @@ $(function(){
 
   //ハッピーエンドで紙吹雪
 
-  //スマホの場合はスライドでヒント画像表示
 
-  //終わった後にボタンをいいねオアイマイチボタン設置ajaxでアンケートとり、DBへ接続l
-  //処理が終わったらリスタートボタンをsubmit();
+  //リザルト画像表示
+  var $result = $('.js-result-img');
+  var resultType = $result.data('result');
 
-  //イベントコマンドじに
+  if(resultType　=== 'ハッピーエンド'){
+    $result.addClass(resultType);
+  } ;
+  //TODO 終わった後にボタンをいいねオアイマイチボタン設置ajaxでアンケートとり、DBへ接続l
+  //TODO 処理が終わったらリスタートボタンをsubmit();
+
+  //TODO イベントコマンド
 });
