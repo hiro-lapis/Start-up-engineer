@@ -64,6 +64,12 @@ body {
   font-size: 1.6em;
   letter-spacing: 0.3em; }
 
+a {
+  color: #444;
+  text-decoration: none; }
+  a:hover {
+    text-decoration: underline; }
+
 .site-width {
   position: relative;
   width: 980px;
@@ -139,6 +145,11 @@ body {
     -webkit-box-shadow: 0 2px 25px rgba(255, 0, 130, 0.5);
     box-shadow: 0 2px 25px rgba(255, 0, 130, 0.5); }
 
+.box-link {
+  width: 980px;
+  text-align: right;
+  margin: 0 auto; }
+
 .container-setting {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -194,6 +205,9 @@ body {
   width: 30%;
   margin: 2rem auto; }
 
+.wrap-btn__twitter {
+  margin-right: 10px; }
+
 .button {
   padding: 1.2rem 1.4rem;
   border-radius: 5px;
@@ -225,6 +239,8 @@ body {
     background-color: rgba(38, 235, 255, 0.8); }
   .button .input-radio__hide {
     display: none; }
+  .button.help {
+    background: #444; }
 
 .wrap-radio {
   display: -webkit-box;
@@ -291,6 +307,11 @@ body {
   flex-direction: column;
   width: 100%;
   height: 100%; }
+
+.wrap {
+  text-align: center; }
+  .wrap-turn {
+    font-size: 1.5rem; }
 
 .characters-box {
   display: -webkit-box;
@@ -379,17 +400,23 @@ body {
         background: #ff8a24; }
       .system-box .command-box .button.rest {
         background: #55D9D9; }
-  .system-box .message-box {
+
+.message-box {
+  padding: 1.5rem 2rem;
+  font-size: 1.6rem;
+  overflow-y: scroll;
+  border: double 4px #444;
+  border-radius: 14px; }
+  .message-box__action {
     width: 70%;
-    height: 100%;
-    padding: 1.5rem 2rem;
-    font-size: 1.6rem;
-    overflow-y: scroll;
-    border: double 4px #444;
-    border-radius: 14px; }
-    .system-box .message-box__bottom {
-      position: relative;
-      bottom: 0; }
+    height: 100%; }
+  .message-box .amount-red {
+    color: #dc3545; }
+  .message-box .quality-aqua {
+    color: #26ebff; }
+  .message-box__bottom {
+    position: relative;
+    bottom: 0; }
 
 .result {
   display: -webkit-box;
@@ -412,7 +439,15 @@ body {
     position: relative;
     top: 75%; }
 
-.js-modal-body {
+.box-btn__result {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center; }
+
+.modal-body__info {
   display: none;
   z-index: 2;
   position: absolute;
@@ -424,7 +459,7 @@ body {
   border-radius: 5px;
   padding: 5px; }
 
-.js-modal-btn {
+.modal-btn {
   position: absolute;
   bottom: 0;
   cursor: pointer;
@@ -436,7 +471,7 @@ body {
   height: 20%;
   padding: 15px; }
 
-.js-modal-cover {
+.modal-cover {
   display: none;
   z-index: 1;
   position: absolute;
@@ -444,5 +479,33 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: #8d8d8d;
+  background: #e0edff;
   opacity: .4; }
+
+.modal-body__event {
+  display: none;
+  z-index: 2;
+  position: absolute;
+  top: 10%;
+  left: 25%;
+  width: 50%;
+  background: #f6f5f4;
+  border: 1px solid #444;
+  border-radius: 5px;
+  padding: 5px; }
+
+.modal-img {
+  width: 100%; }
+
+.box-message {
+  padding: 1.5rem 2rem;
+  font-size: 1.6rem;
+  overflow-y: scroll;
+  border: double 4px #444;
+  border-radius: 14px; }
+  .box-message__event {
+    width: 100%;
+    height: 30%; }
+
+#canvas {
+  position: fixed; }

@@ -20,6 +20,9 @@ $sm: 30%;
 $md: 50%;
 $md-lg: 60%;
 $lg: 100%;
+
+//フォントサイズ
+$btn-font: 1.5rem;
 //アニメーション関数
 @keyframes state-float1 {
   0% {
@@ -65,6 +68,13 @@ body{
   letter-spacing: 0.3em;
 }
 
+a{
+  color: $black;
+  text-decoration: none;
+  &:hover{
+    text-decoration: underline;
+  }
+}
 
 //レイアウト
 .site-width{
@@ -154,6 +164,12 @@ body{
   }
 }
 
+.box-link{
+  width: 980px;
+  text-align: right;
+  margin: 0 auto;
+}
+
 //セッティング
 .container-setting{
   display: flex;
@@ -205,12 +221,15 @@ body{
     width: $sm;
     margin: 2rem auto;
   }
+  &__twitter{
+    margin-right: 10px;
+  }
 }
 
 .button{
   padding: 1.2rem 1.4rem;
   border-radius: 5px;
-  font-size: 1.5rem;
+  font-size: $btn-font;
   color: $gray-300;
   box-shadow: 1px 1px 5px;
   transition: .3s;
@@ -235,6 +254,9 @@ body{
   }
   .input-radio__hide{
     display: none;
+  }
+  &.help{
+    background: $black;
   }
 }
 
@@ -295,7 +317,12 @@ body{
   width: 100%;
   height: 100%;
 }
-
+.wrap{
+  text-align: center;
+  &-turn{
+    font-size: $btn-font;
+  }
+}
 .characters-box{
   display: flex;
   justify-content: space-between;
@@ -383,20 +410,30 @@ body{
       }
     }
   }
-  .message-box{
+}
+.message-box{
+  padding: 1.5rem 2rem;
+  font-size: 1.6rem;
+  overflow-y: scroll;
+  border: double 4px $black;
+  border-radius: 14px;
+  &__action{
     width:70%;
     height: 100%;
-    padding: 1.5rem 2rem;
-    font-size: 1.6rem;
-    overflow-y: scroll;
-    border: double 4px $black;
-    border-radius: 14px;
-    &__bottom{
-      position: relative;
-      bottom: 0;
-    }
+  }
+  .amount-red{
+    color: $red;
+  }
+  .quality-aqua{
+    color: $aqua;
+  }
+  &__bottom{
+    position: relative;
+    bottom: 0;
   }
 }
+
+
 //リザルト画面
 
 .result{
@@ -417,12 +454,16 @@ body{
   }
 }
 
+.box-btn__result{
+  display: flex;
+  justify-content: center;
+}
 
 //js関連クラス
 
-//action
-.js-modal{
-  &-body{
+//ヘルプ・リセットモーダル
+.modal{
+  &-body__info{
     display: none;
     z-index: 2;
     position: absolute;
@@ -454,7 +495,42 @@ body{
     left: 0;
     width: 100%;
     height: 100%;
-    background: #8d8d8d; //TODO 変数適用
+    background: $aliceBlue;
     opacity: .4;
   }
+}
+//イベントモーダル
+.modal{
+  &-body{
+    &__event{
+      display: none;
+      z-index: 2;
+      position: absolute;
+      top: 10%;
+      left: 25%;
+      width: 50%;
+      background: #f6f5f4; //TODO変数
+      border: 1px solid $black;
+      border-radius: 5px;
+      padding: 5px;
+    }
+  }
+  &-img{
+    width: 100%;
+  }
+}
+.box-message{
+  padding: 1.5rem 2rem;
+  font-size: 1.6rem;
+  overflow-y: scroll;
+  border: double 4px $black;
+  border-radius: 14px;
+  &__event{
+    width: 100%;
+    height: 30%;
+  }
+}
+//エンディング用canvas
+#canvas{
+  position: fixed;
 }
