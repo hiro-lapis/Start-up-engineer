@@ -1,5 +1,6 @@
 //bootstrap準拠 https://getbootstrap.com/docs/4.3/getting-started/theming/#color
 $white: #f8f9fa;
+$white-clear: rgba(246, 245, 244, .9);
 $gray-200: #e9ecef;//bootstrap
 $gray-300: #dee2e6;;//bootstrap
 $darkGray: #f8f8f8;
@@ -12,7 +13,8 @@ $red: #dc3545;
 $orange: #ff8a24;
 $yellow: #ffff3f;
 $aqua: #26ebff;
-$aliceBlue: #e0edff;//TODO 役割ごとに色をネーミングする
+$green: #9acd32;
+$aliceBlue: #e0edff;
 
 
 //サイズ
@@ -22,7 +24,22 @@ $md-lg: 60%;
 $lg: 100%;
 
 //フォントサイズ
-$btn-font: 1.5rem;
+$md-font: 1.5rem;
+
+$md-space: 2rem;
+
+$breakpoints: (
+  'sm': 'screen and (max-width: 414px)',
+  'md': 'screen and (max-width: 768px)',//iPad幅
+  'lg': 'screen and (max-width: 1000px)',
+  'xl': 'screen and (max-width: 1200px)',
+) !default;
+
+@mixin mq($breakpoint: sm) {
+  @media #{map-get($breakpoints, $breakpoint)} {
+    @content;
+  }
+}
 //アニメーション関数
 @keyframes state-float1 {
   0% {
@@ -61,11 +78,12 @@ html{
 }
 
 body{
-  background: $gray-200;
-  margin: 2rem auto;
+  margin: $md-space auto;
   font-family: 'Kosugi Maru', sans-serif;
   font-size: 1.6em;
   letter-spacing: 0.3em;
+  padding: 0;
+  margin: 0;
 }
 
 a{
@@ -76,19 +94,59 @@ a{
   }
 }
 
+ol{
+  padding-left: $md-space;
+}
+
+ul{
+  padding-left: 0;
+}
+
+.sp-br{//スマホの時のみ適用されるbrタグ <br class="sp-br">
+  display: none;
+  @include mq(){
+    display: block;
+  }
+}
+.pc-br{//PCの時のみ適用されるbrタグ <br class="sp-br">
+  display: block;
+  @include mq(){
+    display: none;
+  }
+}
 //レイアウト
 .site-width{
   position: relative;
-  width: 980px;
-  height: 551px;
+  box-sizing: border-box;
   margin: 0 auto;
-  background-size: cover;
-  background-color: $white;
+  width: 980px;
+  height: 500px;
+  background: $aliceBlue;
+  @include mq(){
+  width: 100%;
+  height: 100vh;
+  }
+}
+.container{
+  @include mq(){
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 .op{
   &-img{
+    height: 100%;
     background-image: url(../../../img/op/op.png);
+    background-size: cover;
+    background-color: $white;
+    @include mq() {
+    padding-bottom: 5rem;
+    background-size: 125vw;
+    background-repeat: no-repeat;
+    height: 40vh;
+    width: 100%;
+    }
     &-logo{
     }
     &:after{
@@ -111,8 +169,10 @@ a{
     box-sizing: border-box;
     background: $gray-200;
     font-size: 1.7rem;
-    position: absolute;
-    bottom: 0;
+    @include mq(){
+      position: relative;
+      font-size: 1.4rem;
+    }
     &__large{
       width: $lg;
     }
@@ -122,13 +182,17 @@ a{
     font-size: 1.7rem;
     position: relative;
     margin: 5rem auto;
+    background-color: $white-clear;
     &__middle{
       width: $md;
+      @include mq(){
+        margin: $md-space 0;
+        width: $lg;
+        position: static;
+      }
     }
   }
-  &-action{
 
-  }
   &__small{
     width: $sm;
   }
@@ -158,6 +222,12 @@ a{
       timing-function: ease;
       iteration-count: infinite;
     }
+    @include mq(){
+      font-size: 2rem;
+      border-radius: 13rem;
+      width: 15rem;
+      height: 15rem;
+    }
     &:hover{
       box-shadow: 0 2px 25px rgba(255, 0, 130, 0.5);
     }
@@ -168,6 +238,9 @@ a{
   width: 980px;
   text-align: right;
   margin: 0 auto;
+  @include mq(){
+    width: 100%;
+  }
 }
 
 //セッティング
@@ -182,20 +255,36 @@ a{
   position: absolute;
   width: 100%;
   height: 100%;
-  background-size: cover;
+  background-size: contain;
   transition: .8s;
   background-repeat: no-repeat;
+  @include mq(){
+    position: relative;
+    background-size: contain;
+    height: 40%;
+  }
   &.trainee{
     background-image: url(../../../img/setting/trainee.png);
-    background-position-x: 346px;
+    background-position-x: 500px;
+    @include mq(){
+    background-position-x: 0;
+    }
   }
   &.humor{
     background-image: url(../../../img/setting/humor.png);
-    background-position-x: -346px;
+    background-position-x: -255px;
+    @include mq(){
+      background-position-x: 0;
+    }
   }
   &.inspi{
     background-image: url(../../../img/setting/inspiration.png);
-    background-position-Y: 150px;
+    background-position-y: 30px;
+    background-position-x: -190px;
+    @include mq(){
+      background-position-x: 0;
+      background-position-y: 0;
+    }
   }
 }
 
@@ -207,8 +296,17 @@ a{
 }
 .font-title{
   font-size: 3.5rem;
+  @include mq(){
+    font-size: 2.5rem;
+  }
 }
 
+.form-unique{
+  @include mq(){
+    display: flex;
+    flex-direction: column-reverse;
+  }
+}
 .wrap-btn{
   &__setting{
     display: flex;
@@ -219,7 +317,11 @@ a{
     position: relative;
     left: -10px;
     width: $sm;
-    margin: 2rem auto;
+    margin: $md-space auto;
+    @include mq(){
+      position: static;
+      left: 0;
+    }
   }
   &__twitter{
     margin-right: 10px;
@@ -229,7 +331,7 @@ a{
 .button{
   padding: 1.2rem 1.4rem;
   border-radius: 5px;
-  font-size: $btn-font;
+  font-size: $md-font;
   color: $gray-300;
   box-shadow: 1px 1px 5px;
   transition: .3s;
@@ -268,6 +370,13 @@ a{
   position: relative;
   right: 1%;
   height: 120px;
+  @include mq(){
+  position: static;
+  flex-direction: column;
+  align-items: center;
+  width: 75%;
+  height: auto;
+  }
 }
 
 .hidden{
@@ -282,6 +391,12 @@ a{
   top: 6.3rem;
   transition: all 0.5s;
   animation-duration: 0.5s;
+  @include mq(){
+    width: 100%;
+    left: 0;
+    top: 0rem;
+    text-align: center;
+  }
   &:before {
     content: "";
     position: absolute;
@@ -290,15 +405,27 @@ a{
     margin-left: -15px;
     border: 15px solid transparent;
     border-bottom: 15px solid $aliceBlue;
+    @include mq(){
+      display: none;
+    }
   }
   &.humor{
-    left: -3.6rem;
+    left: -5.5rem;
+    @include mq(){
+      left: 0;
+    }
   }
   &.inspiration{
-    left: 10.8rem;
+    left: 11.5rem;
+    @include mq(){
+      left: 0;
+    }
   }
   &.train{
     left: 29rem;
+    @include mq(){
+      left: 0;
+    }
   }
 }
 
@@ -318,32 +445,51 @@ a{
   height: 100%;
 }
 .wrap{
-  text-align: center;
   &-turn{
-    font-size: $btn-font;
+    text-align: center;
+    font-size: $md-font;
   }
 }
 .characters-box{
   display: flex;
   justify-content: space-between;
   width: 100%;
-  height: 50%;
+  height: 60%;
+  @include mq(){
+    display: flex;
+    flex-direction: column-reverse;
+    height: 36vh;
+  }
 }
 
 .character-box{
   width: 25%;
-  height: 100%;
+  height: 90%;
+  @include mq(){
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 18vh;
+    padding: 5px;
+    box-sizing: border-box;
 }
+  }
 
 .character{
   &-img{
     &__box{
-      width: 80%;
+      width: 65%;
       height: 70%;
       border-radius: 10rem;
       overflow: hidden;
       margin: 0 auto;
       border: dashed 2px $gray-300;
+      background: $white;
+      @include mq(){
+        align-self: center;
+        width: 25%;
+        height: 70%;
+      }
       &.humor{
         border: dashed 2px $yellow;
       }
@@ -356,18 +502,26 @@ a{
     }
     &__hero{
       position: relative;
-      left: -8rem;
-      top: 1rem;
-      width: 190%;
+      left: -8.5rem;
+      top: 0rem;
+      width: 210%;
       background: $white;
-    }
+      @include mq(){
+          left: -11.5vw;
+          top: -0.5vh;
+        }
+      }
     &__enemy{
       transform: scale(-1, 1);
       position: relative;
-      left: -10rem;
+      left: -7.6rem;
       top: 1rem;
-      width: 190%;
+      width: 200%;
       background: $white;
+      @include mq(){
+        left: -13vw;
+        top: -0.5vh;
+      }
     }
   }
   &-status{
@@ -375,6 +529,13 @@ a{
     height: 30%;
     font-size: 1.6rem;
     padding-left: 5px;
+    @include mq(){
+      display: flex;
+      flex-direction: column;
+      align-self: center;
+      width: 60%;
+    height: auto;
+    }
   }
 }
 
@@ -382,19 +543,32 @@ a{
   display: flex;
   justify-content: space-between;
   width: 100%;
-  height: 50%;
+  height: 300px;
+  @include mq(){
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+  }
   .command-box{
     position: relative;
     display: flex;
     flex-wrap: wrap;
     width: 25%;
     height: 100%;
+    @include mq(){
+      width: 80%;
+      height: 24vh;
+      margin: 0 auto;
+    }
     .button{
       width: 100%;
       height: 20%;
       transition: .4s;
       &:hover{
         transform: scale(1.1);
+      }
+      &.event{
+        background: $yellow;
       }
       &.attack{
         background: $red;
@@ -412,14 +586,22 @@ a{
   }
 }
 .message-box{
-  padding: 1.5rem 2rem;
+  margin-bottom: 0;
+  padding: 1.5rem $md-space .5rem;
   font-size: 1.6rem;
   overflow-y: scroll;
   border: double 4px $black;
   border-radius: 14px;
+  box-sizing: border-box;
   &__action{
     width:70%;
     height: 100%;
+    background: $white;
+    @include mq(){
+      width: 100%;
+      height: 36vw;
+      margin: 1vh 0;
+    }
   }
   .amount-red{
     color: $red;
@@ -435,25 +617,38 @@ a{
 
 
 //リザルト画面
-
 .result{
   display: flex;
   flex-direction: column;
   text-align: center;
   color: $black;
+  height: 500px;
+  background-position: center;
+  background-size: cover;
+  @include mq(){
+    height: 50vh;
+  }
 }
 .box-result{
+  z-index: 1;
   padding: 15px;
   border-radius: 5px;
   background-color: $gray-200;
   border-radius: 5px;
   &__message{
     font-size: 1.5rem;
-    position: relative;
-    top: 75%;
+    text-align: left;
   }
 }
 
+.img-result{
+  margin: 0 auto;
+  height: 85%;
+  @include mq(){
+  height: 31vh;
+  width: auto;
+  }
+}
 .box-btn__result{
   display: flex;
   justify-content: center;
@@ -474,6 +669,11 @@ a{
     border: 1px solid #444; //TODO変数
     border-radius: 5px;
     padding: 5px;
+    @include mq(){
+    left: 10%;
+    width: 80%;
+    line-height: 200%;
+    }
   }
   &-btn{
     position: absolute;
@@ -501,6 +701,10 @@ a{
 }
 //イベントモーダル
 .modal{
+  &-title{
+    text-align: center;
+    color: $black;
+  }
   &-body{
     &__event{
       display: none;
@@ -510,9 +714,14 @@ a{
       left: 25%;
       width: 50%;
       background: #f6f5f4; //TODO変数
-      border: 1px solid $black;
+      border: 3px dashed $green;
       border-radius: 5px;
       padding: 5px;
+      @include mq(){
+      left: 10%;
+      width: 80%;
+      border-radius: 15px;
+      }
     }
   }
   &-img{
@@ -520,7 +729,7 @@ a{
   }
 }
 .box-message{
-  padding: 1.5rem 2rem;
+  padding: 1.5rem $md-space;
   font-size: 1.6rem;
   overflow-y: scroll;
   border: double 4px $black;

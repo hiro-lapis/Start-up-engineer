@@ -117,7 +117,7 @@ class Hero extends Humans{
   //actionコマンド①攻撃
   public function attack($targetObj){
     //Heroのattackオーバーライド
-    $attackPoint = mt_rand($this->attackMin, 100);
+    $attackPoint = mt_rand($this->attackMin, $this->attackMin + 50);
     $criticalPoint = 9 - $this->critical;
 
     //クリティカル値がカンストした時の誤作動防止
@@ -146,7 +146,6 @@ class Hero extends Humans{
     $damagePoint = mt_rand(10, 40);
     $this->hp -= $damagePoint;
     History::set($codingPoint.'行のコードを打った！'."\n".'疲れで'.$damagePoint.'HPが減った');
-    //TODO開発時表示　 debug(print_r($_SESSION['product']));
   }
   //actionコマンド③トレーニング
   public function training(){
@@ -166,8 +165,8 @@ class Hero extends Humans{
       History::set('ジムに行ってダンベルカール。少し二の腕が引き締まった！');
       break;
       case 4:
-      History::set('ジムに行ってベンチプレス。');
-      History::set('焼け付くような筋肉の感覚がたまらない！');
+      History::set('ジムに行ってベンチプレス');
+      History::set('筋肉の焼けつくような感覚がたまらない！');
       break;
       case 5:
       History::set('ジムに行ってチンニング');
@@ -386,7 +385,7 @@ class Product implements ProductInterface{
       self::setAmountCount();
     }
     if($_SESSION['product']['amount'] > 2300 && $_SESSION['product']['amountCount'] === 4){
-      History::red('バグは取り終えた！後はサーバーにアップするだけだ');
+      History::red('バグは取り終えた！あとはサーバーにアップするだけだ');
       History::set('サーバーのことはこれまで調べて来なかったので、どうすればいいのかよくわからない');
       History::set('ここまできたら、やるしかない！、デプロイ作業に取り掛かった');
       self::setAmountCount();
@@ -395,15 +394,18 @@ class Product implements ProductInterface{
 
   public static function sayQuality(){
     if($_SESSION['product']['quality'] > 2 && $_SESSION['product']['qualityCount'] === 0){
+      History::aqua('徐々にではあるが、自分の頭で考えてコードを打てるようになってきた！');
       History::aqua('とりあえず及第点くらいの成果物にはなりそうだ');
       self::setQualityCount();
     }
     if($_SESSION['product']['quality'] > 4 && $_SESSION['product']['qualityCount'] === 1){
+      History::aqua('アプリのデザインもかなり凝った作りにできた！');
       History::aqua('かなりイケてるアプリになりそうだ！');
       self::setQualityCount();
     }
     if($_SESSION['product']['quality'] > 6 && $_SESSION['product']['qualityCount'] === 2){
-      History::aqua('とんでもないWebサービスを作ってしまったかもしれない！');
+      History::aqua('ビジネスになりそうな機能を実装！');
+      History::aqua('このままいくと、とんでもないアプリを作れるかもしれない！');
       self::setQualityCount();
     }
   }
@@ -412,86 +414,97 @@ class Product implements ProductInterface{
 //Eventクラス
 interface EventInterface{
   public static function actEv();
+  public static function eventInit();
   public static function resultCheck();
 }
 
 class Event implements EventInterface{
+  public static function eventInit(){
+    $_SESSION['event'] ='';
+    $_SESSION['eventNum'] = null;
+    $_SESSION['eventTitle'] = '';
+  }
+  public static function eventSet($str){
+    if(empty($_SESSION['event'])) $_SESSION['event'] = '';
+    $_SESSION['event'] .= $str.'<br>';
+  }
 
   public static function actEv(){
     $luckPoint = ($_SESSION['hero']->getLuck());
-    $eventNum = mt_rand($luckPoint, 5);
-    debug('eventNum:'.$eventNum);
+    $eventNum = mt_rand($luckPoint, 8);
     $_SESSION['eventNum'] = $eventNum;
     switch ($eventNum) {
       case '0':
       $_SESSION['eventTitle'] = 'アイちゃんがやらかした！';
-      History::eventSet('夜遅くまでコードを書いてたら寝坊した!');
-      History::eventSet('自責の念で、少しだけ仕事がしづらくなってしまった');
-      History::eventSet('HPが100ポイントダウン、パワーが5ダウン！');
+      self::eventSet('夜遅くまでコードを書いてたら寝坊した!');
+      self::eventSet('自責の念で、少しだけ仕事がしづらくなってしまった');
+      self::eventSet('HPが100ポイントダウン、パワーが5ダウン！');
       $_SESSION['hero']->setHp($_SESSION['hero']->getHp() - 100);
       $_SESSION['hero']->setAttMin($_SESSION['hero']->getAttMin() - 5);
       Product::setAmount(100);
       break;
       case '1':
       $_SESSION['eventTitle'] = 'ツイッターショック';
-      History::eventSet('ツイッターをしていたら、自分より短期間でアプリを作った人を発見');
-      History::eventSet('ショックで眠れない数日間、眠れず夜を過ごした・・・');
-      History::eventSet('HPが100ダウン');
+      self::eventSet('ツイッターをしていたら、自分より短期間でアプリを作った人を発見');
+      self::eventSet('ショックで眠れない数日間、眠れず夜を過ごした・・・');
+      self::eventSet('HPが100ダウン');
       $_SESSION['hero']->setHp($_SESSION['hero']->getHp() - 100);
       Product::setQuality();
       break;
       case '2':
       $_SESSION['eventTitle'] = '早くおわんないかな';
-      History::eventSet('昼休憩でカフェにいったら、同僚と偶然会ってしまった');
-      History::eventSet('グチばかり聞かされて、気が滅入る・・・');
-      History::eventSet('HPが150ダウン');
-      $_SESSION['hero']->setHp($_SESSION['hero']->getHp() + 200);
+      self::eventSet('昼休憩でカフェにいったら、');
+      self::eventSet('グチっぽい同僚と偶然会ってしまった');
+      self::eventSet('せっかくの休憩時間が台無しになってしまった・・・');
+      self::eventSet('HPが150ダウン');
+      $_SESSION['hero']->setHp($_SESSION['hero']->getHp() - 150);
       break;
       case '3':
       $_SESSION['eventTitle'] = '寝る子は育つ';
-      History::eventSet('会社で爆睡したがバレなかった。ラッキー！');
-      History::eventSet('HPが200回復');
-      $_SESSION['hero']->setHp($_SESSION['hero']->getHp() + 200);
+      self::eventSet('会社で爆睡したがバレなかった。ラッキー！');
+      self::eventSet('HPが250回復');
+      $_SESSION['hero']->setHp($_SESSION['hero']->getHp() + 250);
       break;
       case '4':
-      $_SESSION['eventTitle'] = 'どげんかせんと';
-      History::eventSet('残業で深夜まで仕事するハメになった');
-      History::eventSet('HP-100！このままじゃいけないというキモチでパワーが5アップ！');
-      $_SESSION['hero']->setHp($_SESSION['hero']->getHp() - 50);
-      $_SESSION['hero']->setAttMin($_SESSION['hero']->getAttMin() + 5);
+      $_SESSION['eventTitle'] = 'まっくろくろすけ';
+      self::eventSet('残業で深夜まで仕事するハメになった');
+      self::eventSet('HPが100ダウン！このままじゃいけないというキモチでパワーが5アップ！');
+      $_SESSION['hero']->setHp($_SESSION['hero']->getHp() - 100);
+      $_SESSION['hero']->setAttMin($_SESSION['hero']->getAttMin() + 10);
       break;
       case '5':
-      $_SESSION['eventTitle'] = 'かるく浦島太郎';
-      History::eventSet('休日にコードを打っていたら、あっという間に夜になっていた！');
-      History::eventSet('ホントはショッピングに行くつもりだったんだけど・・・まぁいっか');
-      History::eventSet('200行のコードをなかなかのクオリティで書けた！');
+      $_SESSION['eventTitle'] = '集中してたね';
+      self::eventSet('休日にコードを打っていたら、あっという間に夜になっていた！');
+      self::eventSet('ホントはショッピングに行くつもりだったんだけど・・・まぁいっか');
+      self::eventSet('200行のコードをなかなかのクオリティで書けた！');
       Product::setAmount(200);
       Product::setQuality();
       break;
       case '6':
-      $_SESSION['eventTitle'] = 'もうどうにでもな〜れ♫';
-      History::eventSet('上司担当のプレゼンを、自分がやることになった！');
-      History::eventSet('ヤケクソになってやって見たら、かなり上手くいった！');
-      History::eventSet('仕事が200片付いた！パワーが5上がった！');
-      $_SESSION['enemy']->setHp($_SESSION['enemy']->getHp() - 300);
-      $_SESSION['hero']->getAttMin($_SESSION['hero']->getAttMin() + 5);
+      $_SESSION['eventTitle'] = 'ピンチはチャンス';
+      self::eventSet('上司担当のプレゼンを、自分がやることになった！');
+      self::eventSet('ヤケクソになってやって見たら、かなり上手くいった！');
+      self::eventSet('仕事が200片付いた！パワーが10上がった！');
+      $_SESSION['enemy']->setHp($_SESSION['enemy']->getHp() - 200);
+      $_SESSION['hero']->setAttMin($_SESSION['hero']->getAttMin() + 10);
       break;
       case '7':
-      $_SESSION['eventTitle'] = '飲みニケーション';
-      History::eventSet('嫌いな上司に誘われて、イヤイヤ飲みに行くことに');
-      History::eventSet('酒が入った上司の話は、意外とタメになった');
-      History::eventSet('上司とのわだかまりが溶け、気分がラクになった');
-      History::eventSet('HPが100回復、');
-      $_SESSION['enemy']->setHp($_SESSION['hero']->getHp() - 300);
+      $_SESSION['eventTitle'] = '';
+      self::eventSet('嫌いな上司に誘われて、イヤイヤ飲みに行くことに');
+      self::eventSet('酒が入った上司の話は、意外とタメになった');
+      self::eventSet('上司とのわだかまりが溶け、前向きな気持ちになれた!');
+      Product::setQuality();
+      self::eventSet('HPが250回復、タスクが150減った');
+      $_SESSION['enemy']->setHp($_SESSION['enemy']->getHp() - 150);
+      $_SESSION['enemy']->setHp($_SESSION['hero']->getHp() + 250);
       break;
       case '8':
       $_SESSION['eventTitle'] = 'いいセンスだ';
-      History::eventSet('プログラミングで気づいたことをツイートしたら少しバズった！');
-      History::eventSet('気分よくなったおかげで、その後のプログラミングも上手くいった！');
-      Product::setAmount(200);
+      self::eventSet('プログラミングで気づいたことをツイートしたら少しバズった！');
+      self::eventSet('気分よくなったおかげで、その後のプログラミングも上手くいった！');
+      self::eventSet('400行のコードを、かなりのクオリティで打てた！');
+      Product::setAmount(400);
       Product::setQuality();
-      History::eventSet('150行のコードを、かなりのクオリティで打てた！');
-      $_SESSION['enemy']->setHp($_SESSION['hero']->getHp() - 300);
       break;
     }
     //イベントでゲームオーバーにはならないようにする
@@ -519,15 +532,15 @@ class Event implements EventInterface{
       History::clear();
       History::set('アイちゃんは疲れ果て、挫折してしまった・・・');
       ////////ここからクリア分岐//////////////////////////
-    }  elseif ($_SESSION['product']['amount'] > 500){//TODO リファクタ2500に戻す
+    }  elseif ($_SESSION['product']['amount'] > 2500){
       if($_SESSION['hero']->getName() === 'Muscle AI'){
         //マッスルエンド
         $resultFlg = true;
-        $_SESSION['resultTitle'] = 'マッスルエンド！';
+        $_SESSION['resultTitle'] = 'マッスルエンド';
         $_SESSION['resultImg'] = 'muscle-end';
         History::clear();
         History::set('おめでとう！アイちゃんは立派なボディビルダーになった！');
-      } elseif ($_SESSION['product']['quality'] > 1) {//TODO リファクタ５に戻す
+      } elseif ($_SESSION['product']['quality'] > 6) {
         //ハッピーエンド
         $resultFlg = true;
         $_SESSION['resultTitle'] = 'ハッピーエンド';
@@ -569,10 +582,6 @@ class History implements HistoryInterface {
   public static function aqua($str){
     $_SESSION['history'] .= '<span class="quality-aqua">'.$str.'</span><br>';
   }
-  public static function eventSet($str){
-    if(empty($_SESSION['event'])) $_SESSION['event'] = '';
-    $_SESSION['event'] .= $str.'<br>';
-  }
   public static function clear(){
     unset($_SESSION['history']);
   }
@@ -582,9 +591,9 @@ class History implements HistoryInterface {
 //////////////////////////////////////////////////
 //インスタンス生成
 
-$heros[] = new Hero ('アイ', 'img/bustup/hero-humor.png', 1000, 50, 2, 2, Unique::Humor);
-$heros[] = new Hero ('アイ', 'img/bustup/hero-inspi.png', 500, 70, 5, 1, Unique::Inspiration);
-$heros[] = new Hero ('アイ', 'img/bustup/hero-trainee.png', 800, 80, 1, 0, Unique::Trainee);
+$heros[] = new Hero ('アイ', 'img/bustup/hero-humor.png', 1000, 40, 2, 2, Unique::Humor);
+$heros[] = new Hero ('アイ', 'img/bustup/hero-inspi.png', 500, 50, 5, 1, Unique::Inspiration);
+$heros[] = new Hero ('アイ', 'img/bustup/hero-trainee.png', 800, 70, 1, 0, Unique::Trainee);
 $heros[] = new HeroMuscle ('Muscle AI', 'img/bustup/muscle.png', 5000, 500, 3, 0, Unique::Trainee);
 $enemys[] = new Enemy ('お騒がせ上司', 'img/bustup/enemy01.png', 200, 20, 30, 1);
 $enemys[] = new Enemy ('食べ過ぎ同期', 'img/bustup/enemy02.png', 300, 20, 40, 1);
@@ -607,7 +616,7 @@ function heroCheck(){
     case $_SESSION['hero']->getHp() < 0:
     $resultFlg = true;
     break;
-    case $_SESSION['hero']->getAttMin() >= 100:
+    case $_SESSION['hero']->getAttMin() >= 150:
     if($_SESSION['hero']->getName() !== 'Muscle AI'){
       createHero(3);
       History::set('アイちゃんはついに限界を超え、最強のカラダを手にした！');
@@ -621,9 +630,6 @@ function heroCheck(){
       break;
       case $_SESSION['hero']->getHp() > 100:
       if($_SESSION['hero']->getImg() === 'img/bustup/hero-pinch.png'){ $_SESSION['hero']->setImg('img/bustup/hero-'.$_SESSION['imgPath'].'.png');}
-      //$_SESSION['hero']->setImg('img/bustup/ai'.$_SESSION['unique'].'png');
-      //uniqueボタンの値を残して置いて、回復時のイメージ戻しに使用
-      //TODO
       break;
     }
   }
@@ -634,7 +640,6 @@ function heroCheck(){
   function createEnemy($count = 0){
     global $enemys;
     $_SESSION['enemy'] = $enemys[$count];
-    //TODO debug('エネミーのステータス:'.print_r($_SESSION['enemy']));
     switch ($_SESSION['enemy']->getName()) {
       case '弱気な自分':
       History::set('今度は'.$_SESSION['enemy']->getName().'と向き合うことになった！');
@@ -684,7 +689,6 @@ function heroCheck(){
   } else {
 
     //POSTがあった場合
-    // TODO開発のみ表示　debug('POSTを展開します：'.print_r($_POST));
     debug('POST送信を各フラグに変換します');
     $restartFlg = (!empty($_POST['restart'])) ? true : false ;
     $settingFlg = (!empty($_POST['setting'])) ? true : false ;
@@ -733,6 +737,7 @@ function heroCheck(){
 
     //スタート以降、毎ターンの開始ポイント
   } elseif ($actionFlg){
+    Event::eventInit();
 
     //①Heroのアクション
     switch ($_POST['action']) {
@@ -743,7 +748,6 @@ function heroCheck(){
       //コーディング
       case 'coding':
       $_SESSION['hero']->coding();
-      // TODO開発時は使用　var_dump($_SESSION['history']);
       break;
       //トレーニング
       case 'training':
@@ -774,21 +778,19 @@ function heroCheck(){
         createEnemy(++$_SESSION['enemyCount']);
       } else {
         History::set($_SESSION['enemy']->getName().'との仕事がひと段落した！');
+        $_SESSION['hero']->setAttMin($_SESSION['hero']->getAttMin() + 10);
         createEnemy(++$_SESSION['enemyCount']);
       }
       //④enemyのHPが残っていて、かつイベントコマンドでない場合に攻撃
     } elseif ($_POST['action'] !== 'event') {
       $_SESSION['enemy']->attack($_SESSION['hero']);
-      $_SESSION['eventNum'] = '';
-      $_SESSION['eventTitle'] = '';
     }
     debug('主人公の状態を確認します');
-    heroCheck();//enemyの攻撃後のhero状態判定（HP0以下なら、ゲームオーバーのresultへ移る）
+    heroCheck();
     $_SESSION['turnCount']++;
 
-    //アクション時の処理終了
     //毎ターンイベント発生の判定をするために、最初にfalseにする
-    if(!mt_rand(0, 5)){
+    if(!mt_rand(0, 6 - $_SESSION['hero']->getLuck())){
       $eventFlg = true;
     }
     Event::resultCheck();//$resultFlg判定
@@ -808,17 +810,19 @@ function heroCheck(){
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="description" content="駆け出しエンジニアシミュレーションゲーム">
-    <meta property=og:"site_name" content="StartupEngineer">
-    <meta property=og:"type" content="website">
-    <meta property=og:"title" content="StartupEngineer">
-    <link href="https://fonts.googleapis.com/css?family=Enriqueta&display=swap" rel="stylesheet">
-    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
-    <link rel="stylesheet" href="sass/_src/css/style.css">
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@etBeEP5e7dwmw7P" />
+    <meta property="og:url" content="http://startup-engineer.xyz/" />
+    <meta property="og:title" content="StartupEngineer" />
+    <meta property="og:description" content="駆け出しエンジニアシミュレーションゲーム" />
+    <meta property="og:image" content="http://startup-engineer.xyz/img/twitter/card.png" />
     <script
     src="https://code.jquery.com/jquery-3.4.1.js"
     integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
     crossorigin="anonymous"></script>
-    <!-- <script src="js/jquery-3.4.1.min.js"></script> -->
+    <link href="https://fonts.googleapis.com/css?family=Enriqueta&display=swap" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="sass/_src/css/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
@@ -829,31 +833,31 @@ function heroCheck(){
   <body>
     <?php if($restartFlg){ ?>
 
-      <section  class="container">
-        <div class="site-width op-img">
+      <section class="site-width">
+        <div class="op-img">
           <form class="btn-wrap" method="post">
-            <button class="btn-setting" type="submit" name="setting" value="setting">StartupEngineer</button>
+            <button class="btn-setting" type="submit" name="setting" value="setting">Start<br>up<br>Engineer</button>
           </form>
-          <div class="message message-opening message-opening__large">
-            <p>エンジニアになろうと決心したアイちゃん！</p>
-            <p>頑張ってプログラミングに取り組んでるけど,日常にはトラブルやジャマ者がいっぱい！</p>
-            <p>障害を乗り越え、誘惑を振り切り、ハイクオリティなポートフォリオを作ろう！</p>
-          </div>
+        </div>
+        <div class="message message-opening message-opening__large">
+          <p>エンジニアになろうと決心したアイちゃん！</p>
+          <p>頑張ってプログラミングに取り組んでるけど,日常にはトラブルやジャマ者がいっぱい！</p>
+          <p>障害を乗り越え、誘惑を振り切り、ハイクオリティなポートフォリオを作ろう！</p>
         </div>
 
+        <div class="box-link">
+          <p>画像提供：<a href="https://ai-catcher.com/">アイキャッチャー</a></p>
+        </div>
       </section>
-      <aside class="box-link">
-        <p>画像提供：<a href="https://ai-catcher.com/">アイキャッチャー</a></p>
-      </aside>
     <?php  } else if($settingFlg){ ?>
 
       <section class="site-width container-setting">
-        <div id="js-bg" class="">
+        <div id="js-bg" class=""></div>
 
           <div class="message message-setting message-setting__middle">
             <h2 class="font-title">ユニークセレクト</h2>
-            <p>ユニークによって主人公の能力値が変わります</p>
-            <p>迷ったら、とりあえずを筋トレをしておきましょう！</p>
+            <p>ユニークによって<br>主人公の能力値が変わります</p>
+            <p>迷ったら<br>とりあえず筋トレを選びましょう！</p>
           </div>
 
           <form class="form-unique"method="post">
@@ -867,7 +871,7 @@ function heroCheck(){
                   <label class="button button-radio__humor">
                     <input class="js-showbg input-radio__hide" data-unique="humor" type="radio" name="unique" value="humor"><i class="far fa-grin-squint"></i>ユーモア
                   </label>
-                  <span class="hidden humor">面白きことはよきことなり！<br>楽観的なのでHPが高いです</span>
+                  <span class="hidden humor">面白きことはよきことなり！<br>楽観的なのでイイ事が起きやすいです</span>
                 </div>
 
                 <div class="js-hover__disp">
@@ -881,34 +885,38 @@ function heroCheck(){
                   <label class="button button-radio__trainee">
                     <input class="js-showbg input-radio__hide" data-unique="trainee" type="radio" name="unique" value="trainee"><i class="far fa-hand-rock"></i>筋トレ好き
                   </label>
-                  <span class="hidden train">お願いマッチョ！<br>めっちゃモテた〜い<br>馬力があります</span>
+                  <span class="hidden train">お願いマッチョ！<br class="pc-br">めっちゃモテた〜い<br>馬力があります</span>
                 </div>
 
               </div>
             </div>
           </form>
-        </div>
       </section>
     <?php  } elseif ($resultFlg) { ?>
 
-      <section id="js-canvas__target"  class="site-width result" style="<?php echo 'background-image: url(img/result/'.$_SESSION['resultImg'].'.png'; ?>);">
+      <section id="js-canvas__target"  class="site-width result" >
         <?php if($_SESSION['resultTitle'] === 'ハッピーエンド'){ ?>
           <canvas id="canvas" width="" height="">ハッピーエンドの紙吹雪</canvas>
         <?php } ?>
-        <h2><?php echo (!empty($_SESSION['eventTitle'])) ? $_SESSION['eventTitle'] : ''; ?></h2>
         <div class="wrap-title">
           <p class="js-flake font-title"><?php echo $_SESSION['resultTitle']; ?></p>
         </div>
+          <img class="img-result" src="img/result/<?php echo $_SESSION['resultImg']; ?>.png" alt="">
         <div class="box-result box-result__message">
           <p><?php echo (!empty($_SESSION['history'])) ? $_SESSION['history'] : ''; ?></p>
           <form class="box-btn__result" method="post">
             <div class="wrap-btn__twitter">
-              <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false" data-text="#StartupEngineer" data-url="<!-- ここにTweetしたときに入れたいURLを入れる -->">Tweet</a>
+              <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false" data-text="#StartupEngineer #<?php echo $_SESSION['resultTitle'];?>" data-url="http://startup-engineer.xyz/">Tweet</a>
             </div>
             <button class="btn btn-outline-success" type="submit" name="restart" value="restart">OPへ戻る</button>
           </form>
         </div>
 
+        <?php if($_SESSION['resultTitle'] === 'ハッピーエンド'){ ?>
+          <aside class="box-link">
+            Thanks for playing! It's your turn now!
+          </aside>
+        <?php } ?>
       </section>
 
 
@@ -924,9 +932,9 @@ function heroCheck(){
             <ul>
               <li>アタック:がんばって仕事をします（同僚のHPダウン）<br>同僚のHPを0にするとアイちゃんが成長しますが、仕事はもっと大変になります</li>
               <li>コーディング:コードを打って成果物を作りましょう。HPが少し減ります</li>
-              <li>筋トレ:トレーニングしてパワーがUP。HPが少し減ります</li>
+              <li>筋トレ:トレーニングしてパワーUP。やり過ぎると・・・？</li>
               <li>レスト：休んでHPを回復します</li>
-              <li>イベント:不定期で選択できます。イイ事があるか、災難に会うかは運次第！</li>
+              <li>イベント:不定期でアタックの代わりに選択できます。イイ事があるか、災難に会うかは運次第！</li>
             </ul>
             <li>ステータス</li>
             <ul>
@@ -946,77 +954,78 @@ function heroCheck(){
         </div>
         <!-- イベントモーダル -->
         <div class="js-modal-auto modal-body__event">
+          <h2 class="modal-title"><?php echo (isset($_SESSION['eventTitle'])) ? $_SESSION['eventTitle'] : ''; ?></h2>
           <div class="box-img__event">
             <img class="modal-img" src="img/event/ev<?php if(!empty($_SESSION['eventNum'])){ echo $_SESSION['eventNum'];}?>.png" alt="イベント画像" >
           </div>
-          <div class="box-message box-message__event">
-            <p><?php if(!empty($_SESSION['event'])){ echo $_SESSION['event']; }?></p>
-          </div>
-        </div>
-
-        <!-- モーダルカバー -->
-        <div class="js-modal-cover modal-cover"></div>
-
-        <!-- 通常ゲーム画面 -->
-        <div class="main-display">
-          <span class="wrap-turn"><?php echo $_SESSION['turnCount']; ?>日目</span>
-          <div class="characters-box">
-
-            <div class="character-box">
-              <div class="character-img__box <?php echo $_SESSION['hero']->getUnique(); ?>">
-                <img class="js-hero-icon character-img__hero" src="<?php echo $_SESSION['hero']->getImg(); ?>" alt="主人公アイコン">
-              </div>
-              <div class="character-status">
-                <p class="">Name: <?php echo $_SESSION['hero']->getName(); ?></p>
-                <p class="hp">HP:<span class="js-color-hp"><?php echo $_SESSION['hero']->getHp();?></span> パワー: <?php echo $_SESSION['hero']->getAttMin(); ?></p>
-              </div>
+          <?php if(!empty($_SESSION['event'])){ ?>
+            <div class="box-message box-message__event">
+              <p><?php echo $_SESSION['event']; ?></p>
             </div>
-
-            <div class="character-box">
-              <div class="character-img__box">
-                <img class="character-img__enemy" src="<?php echo $_SESSION['enemy']->getImg(); ?>" alt="敵アイコン">
-              </div>
-              <div class="character-status">
-                <p class="state"> Name: <?php echo $_SESSION['enemy']->getName(); ?></p>
-                <p class="state">タスク:<?php echo $_SESSION['enemy']->getHp(); ?> パワー: <?php echo $_SESSION['enemy']->getAttMin(); ?></p>
-              </div>
-            </div>
+           <?php } ?>
           </div>
 
+          <!-- モーダルカバー -->
+          <div class="js-modal-cover modal-cover"></div>
 
-          <div class="system-box">
-            <div class="command-box">
-              <form class="command-body"class="btn" name="action" method="post">
-                <?php if($eventFlg){ echo '<button class="button event" type="submit" name="action" value="event">イベント</button>';
-                } else { echo '<button class="button attack" type="submit" name="action" value="attack">アタック</button>';} ?>
-                <button class="button coding"type="submit" name="action" value="coding">コード</button>
-                <button class="button training"type="submit" name="action" value="training">筋トレ</button>
-                <button class="button rest"type="submit" name="action" value="rest">レスト</button>
-                <button class="js-modal-on button help" type="button">遊び方/リセット</button>
-              </form>
+          <!-- 通常ゲーム画面 -->
+          <div class="main-display">
+            <span class="wrap-turn"><?php echo $_SESSION['turnCount']; ?>日目</span>
+            <div class="characters-box">
+
+              <div class="character-box">
+                <div class="character-img__box <?php echo $_SESSION['hero']->getUnique(); ?>">
+                  <img class="js-hero-icon character-img__hero <?php echo $_SESSION['hero']->getUnique(); ?>" src="<?php echo $_SESSION['hero']->getImg(); ?>" alt="主人公アイコン">
+                </div>
+                <div class="character-status">
+                  <p class="">Name: <?php echo $_SESSION['hero']->getName(); ?></p>
+                  <p class="hp">HP:<span class="js-color-hp"><?php echo $_SESSION['hero']->getHp();?></span> <br class="sp-br">パワー: <?php echo $_SESSION['hero']->getAttMin(); ?></p>
+                </div>
+              </div>
+
+              <div class="character-box">
+                <div class="character-img__box">
+                  <img class="character-img__enemy" src="<?php echo $_SESSION['enemy']->getImg(); ?>" alt="敵アイコン">
+                </div>
+                <div class="character-status">
+                  <p class="state"> Name:<br class="sp-br"><?php echo $_SESSION['enemy']->getName(); ?></p>
+                  <p class="state">タスク:<?php echo $_SESSION['enemy']->getHp(); ?> <br class="sp-br">パワー: <?php echo $_SESSION['enemy']->getAttMin(); ?></p>
+                </div>
+              </div>
             </div>
 
-            <div class="message-box message-box__action js-auto-scroll">
-              <p><?php echo (!empty($_SESSION['history'])) ? ($_SESSION['history']) : '';  ?></p>
+
+            <div class="system-box">
+              <div class="command-box">
+                <form class="command-body"class="btn" name="action" method="post">
+                  <?php if($eventFlg){ echo '<button class="button event" type="submit" name="action" value="event">イベント</button>';
+                  } else { echo '<button class="button attack" type="submit" name="action" value="attack">アタック</button>';} ?>
+                  <button class="button coding"type="submit" name="action" value="coding">コード</button>
+                  <button class="button training"type="submit" name="action" value="training">筋トレ</button>
+                  <button class="button rest"type="submit" name="action" value="rest">レスト</button>
+                  <button class="js-modal-on button help" type="button">遊び方/リセット</button>
+                </form>
+              </div>
+
+              <div class="message-box message-box__action js-auto-scroll">
+                <p><?php echo (!empty($_SESSION['history'])) ? ($_SESSION['history']) : '';  ?></p>
+              </div>
             </div>
+
           </div>
+        </section>
 
-        </div>
-      </section>
-
-
-    <?php } ?>
-    <!-- イベント時のみ、オートモーダルオン -->
-
-    <script type="text/javascript">
-    <?php if(!empty($_SESSION['eventNum'])){ ?>
-      var autoModalFlg = true;
-      <?php } else { ?>
-        var autoModalFlg = false;
-        <?php }; ?>
-        </script>
+      <?php } ?>
+      <!-- イベント時のみ、オートモーダルオン -->
+      <script type="text/javascript">
+      <?php if(isset($_SESSION['eventNum'])){ ?>
+        var autoModalFlg = true;
+        <?php } else { ?>
+          var autoModalFlg = false;
+          <?php }; ?>
+          </script>
 
 
-        <script type="text/javascript" src="js/script.js"></script>
-      </body>
-      </html>
+          <script type="text/javascript" src="js/script.js"></script>
+        </body>
+        </html>

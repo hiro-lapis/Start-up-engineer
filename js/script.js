@@ -3,10 +3,8 @@ $(function(){
   //unique選択時に背景画像表示
   var $uniqueBtn = $('.js-showbg');
   $uniqueBtn.on('change', function(){
-    console.log('selected');
     var $this = $(this);
     var selectedUnique = $this.data('unique');
-    console.log(selectedUnique);
     $('#js-bg').removeClass();
     $('#js-bg').addClass(selectedUnique);
     $('.js-disable').prop('disabled', false);
@@ -15,7 +13,6 @@ $(function(){
   //uniquボタンホバー時に吹き出し表示
   var $btnLabel = $('.js-hover__disp');
   $btnLabel.on('mouseover', function(){
-    console.log('On');
     var $this = $(this);
     $this.children('.hidden').addClass("visible");
   });
@@ -29,8 +26,6 @@ $(function(){
   var modalCover = $('.js-modal-cover');//ヘルプ用モーダルと共用
 
   if(autoModalFlg){
-    console.log('autoModalOn');//TODO　本番消去
-    console.log(autoModalFlg);
     eventModal.add(modalCover).show();
     eventModal.add(modalCover).delay(5000).fadeOut(1000);
   };
@@ -39,7 +34,6 @@ $(function(){
   var modalBody = $('.js-modal-help');
   var modalOff = $('.js-cancel-btn');
   modalOn.on('click', function() {
-    console.log('On');//TODO　本番消去
     modalBody.fadeIn();
     modalCover.fadeIn();
   });
@@ -52,18 +46,14 @@ $(function(){
   //ピンチ判定、HPカラーリング、主人公のイメージ書き換え
   var hpRemain = $('.js-color-hp').text();
   var hpStr = parseInt(hpRemain, 10);
-  console.log(typeof hpStr);
   if(hpStr < 100){
-    console.log('change:Red');
     $('.js-color-hp').css('color', '#dc3545');
   };
 
 
   //紙吹雪
   var resultType = $('.js-flake').text();
-  console.log(resultType);
   if(resultType === 'ハッピーエンド'){
-    console.log('flakeOn');//TODO 本番削除
     //canvas init
     var canvas = $("#canvas");
     var ctx = canvas[0].getContext("2d");
@@ -153,12 +143,23 @@ $(function(){
     setInterval(draw, 20);
   } ;
 
+  //デバイスサイズに合わせてcanvas調整
+  if(resultType === 'ハッピーエンド'){
+  $(window).on('resize', function(){
+    var W = $('#js-canvas__target').innerWidth();//windowにすると、画面いっぱいになる
+    var H = $('#js-canvas__target').innerHeight();
+    var canvas = $("#canvas");
+
+    canvas.attr("width", W);
+    canvas.attr("height", H);
+    canvas.width = W;
+    canvas.height = H;
+  });
+}
+
   //自動スクロール
   var $historyWindow = $('.js-auto-scroll');
   $historyWindow.animate({scrollTop: $historyWindow[0].scrollHeight}, 'fast');
   height = $('.js-auto-scroll').scrollHeight;
-  //TODO 終わった後にボタンをいいねオアイマイチボタン設置ajaxでアンケートとり、DBへ接続l
-  //TODO 処理が終わったらリスタートボタンをsubmit();
 
-  //TODO イベントコマンド
 });
