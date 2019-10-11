@@ -29,10 +29,10 @@ $md-font: 1.5rem;
 $md-space: 2rem;
 
 $breakpoints: (
-  'sm': 'screen and (max-width: 414px)',
-  'md': 'screen and (max-width: 768px)',//iPad幅
-  'lg': 'screen and (max-width: 1000px)',
-  'xl': 'screen and (max-width: 1200px)',
+'sm': 'screen and (max-width: 414px)',
+'md': 'screen and (max-width: 768px)',//iPad幅
+'lg': 'screen and (max-width: 1000px)',
+'xl': 'screen and (max-width: 1200px)',
 ) !default;
 
 @mixin mq($breakpoint: sm) {
@@ -123,8 +123,8 @@ ul{
   height: 500px;
   background: $aliceBlue;
   @include mq(){
-  width: 100%;
-  height: 100vh;
+    width: 100%;
+    height: 100vh;
   }
 }
 .container{
@@ -141,11 +141,11 @@ ul{
     background-size: cover;
     background-color: $white;
     @include mq() {
-    padding-bottom: 5rem;
-    background-size: 125vw;
-    background-repeat: no-repeat;
-    height: 40vh;
-    width: 100%;
+      padding-bottom: 5rem;
+      background-size: 125vw;
+      background-repeat: no-repeat;
+      height: 40vh;
+      width: 100%;
     }
     &-logo{
     }
@@ -267,7 +267,7 @@ ul{
     background-image: url(../../../img/setting/trainee.png);
     background-position-x: 500px;
     @include mq(){
-    background-position-x: 0;
+      background-position-x: 0;
     }
   }
   &.humor{
@@ -371,11 +371,11 @@ ul{
   right: 1%;
   height: 120px;
   @include mq(){
-  position: static;
-  flex-direction: column;
-  align-items: center;
-  width: 75%;
-  height: auto;
+    position: static;
+    flex-direction: column;
+    align-items: center;
+    width: 75%;
+    height: auto;
   }
 }
 
@@ -472,8 +472,8 @@ ul{
     height: 18vh;
     padding: 5px;
     box-sizing: border-box;
-}
   }
+}
 
 .character{
   &-img{
@@ -507,10 +507,10 @@ ul{
       width: 210%;
       background: $white;
       @include mq(){
-          left: -11.5vw;
-          top: -0.5vh;
-        }
+        left: -11.5vw;
+        top: -0.5vh;
       }
+    }
     &__enemy{
       transform: scale(-1, 1);
       position: relative;
@@ -534,7 +534,7 @@ ul{
       flex-direction: column;
       align-self: center;
       width: 60%;
-    height: auto;
+      height: auto;
     }
   }
 }
@@ -645,8 +645,8 @@ ul{
   margin: 0 auto;
   height: 85%;
   @include mq(){
-  height: 31vh;
-  width: auto;
+    height: 31vh;
+    width: auto;
   }
 }
 .box-btn__result{
@@ -670,9 +670,9 @@ ul{
     border-radius: 5px;
     padding: 5px;
     @include mq(){
-    left: 10%;
-    width: 80%;
-    line-height: 200%;
+      left: 10%;
+      width: 80%;
+      line-height: 200%;
     }
   }
   &-btn{
@@ -718,9 +718,9 @@ ul{
       border-radius: 5px;
       padding: 5px;
       @include mq(){
-      left: 10%;
-      width: 80%;
-      border-radius: 15px;
+        left: 10%;
+        width: 80%;
+        border-radius: 15px;
       }
     }
   }
