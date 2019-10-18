@@ -970,7 +970,7 @@ function heroCheck(){
 
           <!-- 通常ゲーム画面 -->
           <div class="main-display">
-            <span class="wrap-turn"><?php echo $_SESSION['turnCount']; ?>日目</span>
+            <div class="wrap-turn"><?php echo $_SESSION['turnCount']; ?>日目</div>
             <div class="characters-box">
 
               <div class="character-box">

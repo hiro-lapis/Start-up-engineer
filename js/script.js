@@ -24,11 +24,18 @@ $(function(){
   //イベント時に自動でモーダル表示
   var eventModal = $('.js-modal-auto');
   var modalCover = $('.js-modal-cover');//ヘルプ用モーダルと共用
+  var these = eventModal.add(modalCover);
 
   if(autoModalFlg){
-    eventModal.add(modalCover).show();
-    eventModal.add(modalCover).delay(5000).fadeOut(1000);
+    var timeLimit;
+    these.show();
+    setTimeout(function(){ these.fadeOut(1000);}, 5000);
+    these.on('click', function(){
+      these.fadeOut(1000);
+    });
   };
+
+
   //ヘルプ用モーダル
   var modalOn = $('.js-modal-on');
   var modalBody = $('.js-modal-help');

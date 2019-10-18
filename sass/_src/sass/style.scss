@@ -293,6 +293,9 @@ ul{
   background-color: $gray-200;
   border-radius: 25px;
   margin: 0 auto;
+  @include mq(){
+    width: 65%;
+  }
 }
 .font-title{
   font-size: 3.5rem;
@@ -446,6 +449,7 @@ ul{
 }
 .wrap{
   &-turn{
+    margin-bottom: 10px;
     text-align: center;
     font-size: $md-font;
   }
@@ -458,7 +462,7 @@ ul{
   @include mq(){
     display: flex;
     flex-direction: column-reverse;
-    height: 36vh;
+    height: 30vh;
   }
 }
 
@@ -469,7 +473,7 @@ ul{
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 18vh;
+    height: 15vh;
     padding: 5px;
     box-sizing: border-box;
   }
@@ -477,6 +481,22 @@ ul{
 
 .character{
   &-img{
+    &__hero{
+      width: 100%;
+      background: $white;
+      @include mq(){
+        width: 60px;
+      }
+    }
+    &__enemy{
+      transform: scale(-1, 1);
+      position: relative;
+      width: 100%;
+      background: $white;
+      @include mq(){
+        width: 60px;
+      }
+    }
     &__box{
       width: 65%;
       height: 70%;
@@ -487,8 +507,9 @@ ul{
       background: $white;
       @include mq(){
         align-self: center;
-        width: 25%;
-        height: 70%;
+        margin-right: 5vw;
+        width: 65px;
+        height: 65px;
       }
       &.humor{
         border: dashed 2px $yellow;
@@ -500,29 +521,8 @@ ul{
         border: dashed 2px $red;
       }
     }
-    &__hero{
-      position: relative;
-      left: -8.5rem;
-      top: 0rem;
-      width: 210%;
-      background: $white;
-      @include mq(){
-        left: -11.5vw;
-        top: -0.5vh;
-      }
-    }
-    &__enemy{
-      transform: scale(-1, 1);
-      position: relative;
-      left: -7.6rem;
-      top: 1rem;
-      width: 200%;
-      background: $white;
-      @include mq(){
-        left: -13vw;
-        top: -0.5vh;
-      }
-    }
+
+
   }
   &-status{
     width: 100%;
@@ -535,6 +535,7 @@ ul{
       align-self: center;
       width: 60%;
       height: auto;
+      font-size: 1rem;
     }
   }
 }
@@ -626,7 +627,7 @@ ul{
   background-position: center;
   background-size: cover;
   @include mq(){
-    height: 50vh;
+    height: auto;
   }
 }
 .box-result{
@@ -642,11 +643,11 @@ ul{
 }
 
 .img-result{
+  object-fit: cover;
   margin: 0 auto;
   height: 85%;
   @include mq(){
-    height: 31vh;
-    width: auto;
+    width: 100%;
   }
 }
 .box-btn__result{
