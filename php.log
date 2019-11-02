@@ -48820,3 +48820,51 @@ Stack trace:
 [17-Oct-2019 05:00:29 UTC] デバッグ: restartフラグ:1
 [17-Oct-2019 05:00:29 UTC] デバッグ: settingフラグ:0
 [17-Oct-2019 05:00:29 UTC] デバッグ: SESSIONを空にします
+[19-Oct-2019 02:50:34 UTC] PHP Notice:  Undefined index: restart in /Applications/MAMP/htdocs/startupengineer/index.php on line 681
+[19-Oct-2019 02:50:34 UTC] デバッグ: ページに遷移、もしくはリスタートボタンが押されたので、restartフラグをONにします
+[19-Oct-2019 02:50:34 UTC] デバッグ: OP画面を出力します
+[19-Oct-2019 02:50:34 UTC] デバッグ: restartフラグ:1
+[19-Oct-2019 02:50:34 UTC] デバッグ: settingフラグ:0
+[19-Oct-2019 02:50:34 UTC] デバッグ: SESSIONを空にします
+[22-Oct-2019 02:02:48 UTC] PHP Notice:  Undefined index: restart in /Applications/MAMP/htdocs/startupengineer/index.php on line 681
+[22-Oct-2019 02:02:48 UTC] デバッグ: ページに遷移、もしくはリスタートボタンが押されたので、restartフラグをONにします
+[22-Oct-2019 02:02:48 UTC] デバッグ: OP画面を出力します
+[22-Oct-2019 02:02:48 UTC] デバッグ: restartフラグ:1
+[22-Oct-2019 02:02:48 UTC] デバッグ: settingフラグ:0
+[22-Oct-2019 02:02:48 UTC] デバッグ: SESSIONを空にします
+[22-Oct-2019 12:54:29 UTC] PHP Notice:  Undefined index: restart in /Applications/MAMP/htdocs/startupengineer/index.php on line 681
+[22-Oct-2019 12:54:29 UTC] デバッグ: ページに遷移、もしくはリスタートボタンが押されたので、restartフラグをONにします
+[22-Oct-2019 12:54:29 UTC] デバッグ: OP画面を出力します
+[22-Oct-2019 12:54:29 UTC] デバッグ: restartフラグ:1
+[22-Oct-2019 12:54:29 UTC] デバッグ: settingフラグ:0
+[22-Oct-2019 12:54:29 UTC] デバッグ: SESSIONを空にします
+[23-Oct-2019 01:48:21 UTC] PHP Notice:  Undefined index: restart in /Applications/MAMP/htdocs/startupengineer/index.php on line 681
+[23-Oct-2019 01:48:21 UTC] デバッグ: ページに遷移、もしくはリスタートボタンが押されたので、restartフラグをONにします
+[23-Oct-2019 01:48:21 UTC] デバッグ: OP画面を出力します
+[23-Oct-2019 01:48:21 UTC] デバッグ: restartフラグ:1
+[23-Oct-2019 01:48:21 UTC] デバッグ: settingフラグ:0
+[23-Oct-2019 01:48:21 UTC] デバッグ: SESSIONを空にします
+[26-Oct-2019 07:33:27 UTC] PHP Notice:  Undefined index: restart in /Applications/MAMP/htdocs/startupengineer/index.php on line 681
+[26-Oct-2019 07:33:27 UTC] デバッグ: ページに遷移、もしくはリスタートボタンが押されたので、restartフラグをONにします
+[26-Oct-2019 07:33:27 UTC] デバッグ: OP画面を出力します
+[26-Oct-2019 07:33:27 UTC] デバッグ: restartフラグ:1
+[26-Oct-2019 07:33:27 UTC] デバッグ: settingフラグ:0
+[26-Oct-2019 07:33:27 UTC] デバッグ: SESSIONを空にします
+[26-Oct-2019 15:45:39 UTC] PHP Notice:  Undefined index: restart in /Applications/MAMP/htdocs/startupengineer/index.php on line 681
+[26-Oct-2019 15:45:39 UTC] デバッグ: ページに遷移、もしくはリスタートボタンが押されたので、restartフラグをONにします
+[26-Oct-2019 15:45:39 UTC] デバッグ: OP画面を出力します
+[26-Oct-2019 15:45:39 UTC] デバッグ: restartフラグ:1
+[26-Oct-2019 15:45:39 UTC] デバッグ: settingフラグ:0
+[26-Oct-2019 15:45:39 UTC] デバッグ: SESSIONを空にします
+[01-Nov-2019 03:50:56 UTC] PHP Notice:  Undefined index: restart in /Applications/MAMP/htdocs/startupengineer/index.php on line 681
+[01-Nov-2019 03:50:56 UTC] デバッグ: ページに遷移、もしくはリスタートボタンが押されたので、restartフラグをONにします
+[01-Nov-2019 03:50:56 UTC] デバッグ: OP画面を出力します
+[01-Nov-2019 03:50:56 UTC] デバッグ: restartフラグ:1
+[01-Nov-2019 03:50:56 UTC] デバッグ: settingフラグ:0
+[01-Nov-2019 03:50:56 UTC] デバッグ: SESSIONを空にします
+[01-Nov-2019 04:58:07 UTC] PHP Notice:  Undefined index: restart in /Applications/MAMP/htdocs/startupengineer/index.php on line 681
+[01-Nov-2019 04:58:07 UTC] デバッグ: ページに遷移、もしくはリスタートボタンが押されたので、restartフラグをONにします
+[01-Nov-2019 04:58:07 UTC] デバッグ: OP画面を出力します
+[01-Nov-2019 04:58:07 UTC] デバッグ: restartフラグ:1
+[01-Nov-2019 04:58:07 UTC] デバッグ: settingフラグ:0
+[01-Nov-2019 04:58:07 UTC] デバッグ: SESSIONを空にします
