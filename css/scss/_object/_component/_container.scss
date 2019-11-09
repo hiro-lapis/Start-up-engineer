@@ -1,0 +1,25 @@
+@charset "utf-8";
+/* ==========================================================================
+Container
+========================================================================== */
+.c-container{
+    width: 100vw;
+    margin-bottom: $space_9l;
+    @include pc(){
+        width: 960px;
+        margin: 100px auto;
+    }
+    &__title{
+        text-align: center;
+        font-size: $font-size_4l;
+        margin-bottom: $space_5l;
+        &--facility{
+            @extend .c-container__title;
+            margin-bottom: $space_7l;
+        }
+    }
+    &--ornament{
+        display: flex;
+        flex-direction: column;
+    }
+}

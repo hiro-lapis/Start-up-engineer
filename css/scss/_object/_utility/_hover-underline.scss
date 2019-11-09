@@ -1,0 +1,16 @@
+@charset "utf-8";
+/* ==========================================================================
+Hover-underLine
+========================================================================== */
+.u-hover-underline {
+  padding-bottom: .18em;/* アンダーラインの間隔 */
+  background: linear-gradient(rgba(0,0,0,0.87), rgba(0,0,0,0.87)) 0 100%/0 2px no-repeat;
+  transition: background .4s;
+  text-decoration: none;
+}
+.u-hover-underline.reverse {
+  background-position: 100% 100%;
+}
+.u-hover-underline:hover {
+  background-size: 100% 2px;
+}

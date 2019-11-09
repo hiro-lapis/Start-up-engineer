@@ -1,12 +1,28 @@
 $(function(){
-
+  
   //unique選択時に背景画像表示
-  var $uniqueBtn = $('.js-showbg');
+  let $uniqueBtn = $('.js-showbg'),
+      $mainDisplay = $('.js-main-display'),
+      $messageBox = $('.js-message-box');
   $uniqueBtn.on('change', function(){
-    var $this = $(this);
-    var selectedUnique = $this.data('unique');
-    $('#js-bg').removeClass();
-    $('#js-bg').addClass(selectedUnique);
+    let $this = $(this);
+    let selectedUnique = $this.data('unique');
+
+    switch (selectedUnique) {
+      case 'humor':
+        let infoText = '面白きことはよきことなり！楽観的なのでイイ事が起きやすいです'
+        break;
+      case 'inspi':
+        let infoText = 'ねぼすけで休みがち・・・だけど、センスがよく、やればできる子です'
+        break;
+      case 'trainee':
+        let infoText = 'お願いマッチョ！めっちゃモテた〜い馬力があります'
+        break;
+
+    }
+    $mainDisplay.removeClass();
+    $mainDisplay.addClass(selectedUnique);
+    $messageBox.text(infoText);
     $('.js-disable').prop('disabled', false);
   });
 

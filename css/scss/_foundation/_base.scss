@@ -1,0 +1,47 @@
+@charset "utf-8";
+/* ==========================================================================
+ Base
+========================================================================== */
+html, body {
+    width: 100%;
+    background: $color_base;
+    color: $font-color_default;
+    font-size: $font-size_default;
+    box-sizing: border-box;
+//   line-height:1.4;
+    font-family: 'M PLUS Rounded 1c', sans-serif;
+    text-size-adjust: 100%;
+    scroll-behavior: smooth;
+//    letter-spacing: 0.1em;
+}
+
+html {
+    /* ルートのフォントサイズを10pxに設定しておく */
+	font-size: 62.5%;
+}
+
+body {
+	/* ルートのフォントサイズを1.6em（16pxと同等のサイズ）に設定 */
+	font-size: $font-size_default;
+}
+
+img{
+	vertical-align: bottom;
+    width: 100%;
+    object-fit: cover;
+}
+
+a,
+button {
+    cursor: pointer;
+    text-decoration: none;
+    transition: .3s;
+    color: $font-color_default;
+}
+
+a:hover,
+button:hover {
+    color: $font-color_link-hover;
+    text-decoration: none;
+    transition: .3s;
+}
