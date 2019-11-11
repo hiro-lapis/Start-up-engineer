@@ -1,0 +1,13 @@
+@charset "utf-8";
+/* ==========================================================================
+Title
+========================================================================== */
+.c-title {
+  font-size: 4rem;
+  text-align: center;
+  background: $color_white2;
+  &--modal {
+    text-align: center;
+    font-size: 3rem;
+  }
+}

@@ -1,0 +1,72 @@
+@charset "utf-8";
+// ====================================
+// 共通で使う変数を設定
+// ====================================
+$site-width: 980px;
+
+//color
+$color_base: #fcfcfc;
+$color_theme: #66a5ad;
+$color_theme-clear1: rgba(102, 165, 173, 0.7);
+$color_theme-clear2: rgba(102, 165, 173, 0.5);
+$color_theme_light: #e8d3ae;
+$color_accent: #899878;
+$color_accent_light: #d7e0ce;
+
+$color_black: rgba(0, 0, 0, 1);
+$color_black1: rgba(0, 0, 0, 0.87);
+$color_black2: rgba(0, 0, 0, 0.54);
+$color_black3: rgba(0, 0, 0, 0.26);
+$color_black4: rgba(0, 0, 0, 0.12);
+
+$color_white1: rgba(255, 255, 255, 1);
+$color_white2: rgba(255, 255, 255, 0.7);
+$color_white3: rgba(255, 255, 255, 0.3);
+$color_white4: rgba(255, 255, 255, 0.12);
+
+$weak: #a0a0a0;
+
+//ボタンカラー
+$humor: #55c500;
+$trainee: #ff6633;
+$inspi: #3febff;
+$submit: #0277bd;
+$work: #e53935;
+$rest: #ecf331;
+
+//テキストカラー
+$quality: $inspi;
+$amount: $work;
+
+//メッセージボックスカラー
+$box-bg: rgba(255, 234, 234, 40%);
+$message-border: #ffc3c3;
+$btn-box: rgba(255, 195, 195, 50%);
+
+//font
+//$font-size
+$font-size_s: 1.2rem;
+$font-size_m: 1.4rem;
+$font-size_default: 1.6rem; //defined  in base.scss
+$font-size_l: 1.8rem;
+$font-size_2l: 2rem;
+$font-size_3l: 3rem;
+$font-size_4l: 4rem;
+$font-size_5l: 5rem;
+
+// font-color
+$font-color_default: $color_black1;
+$font-color_link-hover: $color_black;
+
+//space-size
+$space_s: 5px;
+$space_m: 10px;
+$space_l: 15px;
+$space_2l: 20px;
+$space_3l: 30px;
+$space_4l: 40px;
+$space_5l: 50px;
+$space_6l: 60px;
+$space_7l: 70px;
+$space_8l: 80px;
+$space_9l: 90px;

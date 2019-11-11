@@ -1,0 +1,19 @@
+@charset "utf-8";
+/* ==========================================================================
+Text
+========================================================================== */
+.p-text-link {
+  color: $color_black2;
+}
+
+.p-text--day-count {
+  text-align: center;
+}
+.p-text {
+  &--amount {
+    color: $amount;
+  }
+  &--quality {
+    color: $quality;
+  }
+}

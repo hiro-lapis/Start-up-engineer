@@ -441,6 +441,7 @@ class Event implements EventInterface{
       self::eventSet('HPが100ポイントダウン、パワーが5ダウン！');
       $_SESSION['hero']->setHp($_SESSION['hero']->getHp() - 100);
       $_SESSION['hero']->setAttMin($_SESSION['hero']->getAttMin() - 5);
+      $_SESSION['eventNum'] = int(0);
       Product::setAmount(100);
       break;
       case '1':
@@ -466,7 +467,7 @@ class Event implements EventInterface{
       $_SESSION['hero']->setHp($_SESSION['hero']->getHp() + 250);
       break;
       case '4':
-      $_SESSION['eventTitle'] = 'まっくろくろすけ';
+      $_SESSION['eventTitle'] = '24h';
       self::eventSet('残業で深夜まで仕事するハメになった');
       self::eventSet('HPが100ダウン！このままじゃいけないというキモチでパワーが5アップ！');
       $_SESSION['hero']->setHp($_SESSION['hero']->getHp() - 100);
@@ -489,14 +490,14 @@ class Event implements EventInterface{
       $_SESSION['hero']->setAttMin($_SESSION['hero']->getAttMin() + 10);
       break;
       case '7':
-      $_SESSION['eventTitle'] = '';
+      $_SESSION['eventTitle'] = '悪い人なんていない';
       self::eventSet('嫌いな上司に誘われて、イヤイヤ飲みに行くことに');
       self::eventSet('酒が入った上司の話は、意外とタメになった');
       self::eventSet('上司とのわだかまりが溶け、前向きな気持ちになれた!');
       Product::setQuality();
       self::eventSet('HPが250回復、タスクが150減った');
       $_SESSION['enemy']->setHp($_SESSION['enemy']->getHp() - 150);
-      $_SESSION['enemy']->setHp($_SESSION['hero']->getHp() + 250);
+      $_SESSION['hero']->setHp($_SESSION['hero']->getHp() + 250);
       break;
       case '8':
       $_SESSION['eventTitle'] = 'いいセンスだ';
@@ -577,10 +578,10 @@ class History implements HistoryInterface {
     $_SESSION['history'] .= $str.'<br>';
   }
   public static function red($str){
-    $_SESSION['history'] .= '<span class="amount-red">'.$str.'</span><br>';
+    $_SESSION['history'] .= '<span class="p-text--amount">'.$str.'</span><br>';
   }
   public static function aqua($str){
-    $_SESSION['history'] .= '<span class="quality-aqua">'.$str.'</span><br>';
+    $_SESSION['history'] .= '<span class="p-text--quality">'.$str.'</span><br>';
   }
   public static function clear(){
     unset($_SESSION['history']);

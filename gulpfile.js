@@ -60,7 +60,7 @@ done();
 
 // 監視
 gulp.task( 'watch', function(done) {
-gulp.watch('./*.html', gulp.task('bs-reload')); //htmlが更新されたらbs-reloadを実行
+gulp.watch('./*.php', gulp.task('bs-reload')); //htmlが更新されたらbs-reloadを実行
 gulp.watch( './scss/**/*.scss', gulp.task('sass') ); //sassが更新されたらgulp sassを実行
 gulp.watch('./scss/**/*.scss', gulp.task('bs-reload')); //sassが更新されたらbs-reloadを実行
 gulp.watch( './js/*.js', gulp.task('bs-reload') ); //jsが更新されたらbs-relaodを実行

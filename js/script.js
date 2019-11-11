@@ -1,89 +1,93 @@
-$(function(){
-  
+$(function() {
   //unique選択時に背景画像表示
-  let $uniqueBtn = $('.js-showbg'),
-      $mainDisplay = $('.js-main-display'),
-      $messageBox = $('.js-message-box');
-  $uniqueBtn.on('change', function(){
-    let $this = $(this);
-    let selectedUnique = $this.data('unique');
+  let $uniqueBtn = $(".js-showbg"),
+    $mainDisplay = $(".js-unique-display"),
+    $messageBox = $(".js-message-box");
+  $uniqueBtn.on("change", function() {
+    let $this = $(this),
+      infoText,
+      selectedUnique = $this.data("unique");
 
     switch (selectedUnique) {
-      case 'humor':
-        let infoText = '面白きことはよきことなり！楽観的なのでイイ事が起きやすいです'
+      case "humor":
+        infoText =
+          "面白きことはよきことなり！楽観的なのでイイ事が起きやすいです";
         break;
-      case 'inspi':
-        let infoText = 'ねぼすけで休みがち・・・だけど、センスがよく、やればできる子です'
+      case "inspi":
+        infoText =
+          "ねぼすけで休みがち・・・だけど、センスがよく、やればできる子です";
         break;
-      case 'trainee':
-        let infoText = 'お願いマッチョ！めっちゃモテた〜い馬力があります'
+      case "trainee":
+        infoText = "お願いマッチョ！めっちゃモテた〜い馬力があります";
         break;
-
     }
-    $mainDisplay.removeClass();
+    $mainDisplay.removeClass("humor inspi trainee");
     $mainDisplay.addClass(selectedUnique);
     $messageBox.text(infoText);
-    $('.js-disable').prop('disabled', false);
-  });
-
-  //uniquボタンホバー時に吹き出し表示
-  var $btnLabel = $('.js-hover__disp');
-  $btnLabel.on('mouseover', function(){
-    var $this = $(this);
-    $this.children('.hidden').addClass("visible");
-  });
-  $btnLabel.on('mouseleave', function(){
-    var $this = $(this);
-    $this.children('.hidden').removeClass("visible");
+    $(".js-disable").prop("disabled", false);
   });
 
   //イベント時に自動でモーダル表示
-  var eventModal = $('.js-modal-auto');
-  var modalCover = $('.js-modal-cover');//ヘルプ用モーダルと共用
-  var these = eventModal.add(modalCover);
+  const modalCover = $(".js-modal-cover"); //ヘルプ用モーダルと共用
+  const eventModal = $(".js-modal-auto");
+  const these = eventModal.add(modalCover);
 
-  if(autoModalFlg){
-    var timeLimit;
+  if (autoModalFlg) {
+    let winWidth = $(".l-window").width(),
+      modalWidth = eventModal.innerWidth();
+    eventModal.css("margin-left", winWidth / 2 - modalWidth / 2);
     these.show();
-    setTimeout(function(){ these.fadeOut(1000);}, 5000);
-    these.on('click', function(){
+    setTimeout(function() {
+      these.fadeOut(1000);
+    }, 5000);
+    these.on("click", function() {
       these.fadeOut(1000);
     });
-  };
+  }
 
+  //自動スクロール
+  const $historyWindow = $(".js-messageBox");
+  $(window).on("load", function() {
+    const bottomHeight = $(".js-auto-scroll").height();
+    $historyWindow.animate({ scrollTop: bottomHeight }, "fast");
+  });
 
   //ヘルプ用モーダル
-  var modalOn = $('.js-modal-on');
-  var modalBody = $('.js-modal-help');
-  var modalOff = $('.js-cancel-btn');
-  modalOn.on('click', function() {
+  var modalOn = $(".js-modal-on");
+  var modalBody = $(".js-modal-help");
+  var modalOff = $(".js-cancel-btn");
+  modalOn.on("click", function() {
+    let winWidth = $(".l-window").width(),
+      modalWidth = modalBody.innerWidth();
+
+    modalBody.css("margin-left", winWidth / 2 - modalWidth / 2);
     modalBody.fadeIn();
     modalCover.fadeIn();
   });
-  modalOff.add(modalCover).on('click', function() {
+
+  modalOff.add(modalCover).on("click", function() {
     //TODO　add()でイベントDOMを複数設定
     modalBody.fadeOut();
     modalCover.fadeOut();
   });
 
   //ピンチ判定、HPカラーリング、主人公のイメージ書き換え
-  var hpRemain = $('.js-color-hp').text();
-  var hpStr = parseInt(hpRemain, 10);
-  if(hpStr < 100){
-    $('.js-color-hp').css('color', '#dc3545');
-  };
-
+  const hpRemain = $(".js-color-").text();
+  const hpStr = parseInt(hpRemain, 10);
+  if (hpStr < 100) {
+    $(".js-color-text").css("color", "#dc3545");
+  }
 
   //紙吹雪
-  var resultType = $('.js-flake').text();
-  if(resultType === 'ハッピーエンド'){
+  let resultType = $(".js-result-type").text();
+  if (resultType === "ハッピーエンド") {
     //canvas init
-    var canvas = $("#canvas");
-    var ctx = canvas[0].getContext("2d");
+    const canvas = $("#canvas");
+    let ctx = canvas[0].getContext("2d");
 
     //canvas dimensions
-    var W = $('#js-canvas__target').innerWidth();//windowにすると、画面いっぱいになる
-    var H = $('#js-canvas__target').innerHeight();
+    let W = $(".js-canvas-target").innerWidth(); //windowにすると、画面いっぱいになる
+    let H = $(".js-canvas-target").innerHeight();
 
     canvas.attr("width", W);
     canvas.attr("height", H);
@@ -91,15 +95,22 @@ $(function(){
     canvas.height = H;
 
     //snowflake particles
-    var mp = 100; //max particles
-    var particles = [];//配列
+    let mp = 100; //max particles
+    let particles = []; //配列
     for (var i = 0; i < mp; i++) {
       particles.push({
         x: Math.random() * W, //x-coordinate Math.random()は0~1の乱数を返すメソッド
         y: Math.random() * H, //y-coordinate
         r: Math.random() * 15 + 1, //radius
         d: Math.random() * mp, //density
-        color: "rgba(" + Math.floor((Math.random() * 255)) + ", " + Math.floor((Math.random() * 255)) + ", " + Math.floor((Math.random() * 255)) + ", 0.8)",
+        color:
+          "rgba(" +
+          Math.floor(Math.random() * 255) +
+          ", " +
+          Math.floor(Math.random() * 255) +
+          ", " +
+          Math.floor(Math.random() * 255) +
+          ", 0.8)",
         tilt: Math.floor(Math.random() * 5) - 5
       });
     }
@@ -108,7 +119,7 @@ $(function(){
     function draw() {
       ctx.clearRect(0, 0, W, H);
       for (var i = 0; i < mp; i++) {
-        var p = particles[i];
+        let p = particles[i];
         ctx.beginPath();
         ctx.lineWidth = p.r;
         ctx.strokeStyle = p.color; // Green path
@@ -119,7 +130,7 @@ $(function(){
       update();
     }
 
-    var angle = 0;
+    let angle = 0;
     function update() {
       angle += 0.01;
       for (var i = 0; i < mp; i++) {
@@ -164,25 +175,19 @@ $(function(){
       }
     }
     setInterval(draw, 20);
-  } ;
+  }
 
-  //デバイスサイズに合わせてcanvas調整
-  if(resultType === 'ハッピーエンド'){
-  $(window).on('resize', function(){
-    var W = $('#js-canvas__target').innerWidth();//windowにすると、画面いっぱいになる
-    var H = $('#js-canvas__target').innerHeight();
-    var canvas = $("#canvas");
+  //リサイズに合わせてcanvas調整
+  if (resultType === "ハッピーエンド") {
+    $(window).on("resize", function() {
+      let W = $(".js-canvas-target").innerWidth(); //windowにすると、画面いっぱいになる
+      let H = $(".js-canvas-target").innerHeight();
+      let canvas = $("#canvas");
 
-    canvas.attr("width", W);
-    canvas.attr("height", H);
-    canvas.width = W;
-    canvas.height = H;
-  });
-}
-
-  //自動スクロール
-  var $historyWindow = $('.js-auto-scroll');
-  $historyWindow.animate({scrollTop: $historyWindow[0].scrollHeight}, 'fast');
-  height = $('.js-auto-scroll').scrollHeight;
-
+      canvas.attr("width", W);
+      canvas.attr("height", H);
+      canvas.width = W;
+      canvas.height = H;
+    });
+  }
 });

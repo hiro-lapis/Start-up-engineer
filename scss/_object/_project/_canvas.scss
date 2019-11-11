@@ -1,11 +1,8 @@
 @charset "utf-8";
 /* ==========================================================================
-Button
+Canvas
 ========================================================================== */
-.c-btn{
-    border: none;
-    transition: all .3s;
-    &:hover{
-        opacity: .5;
-    }
+.c-canvas {
+  position: absolute;
+  z-index: 1;
 }

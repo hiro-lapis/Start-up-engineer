@@ -1,0 +1,75 @@
+@charset "utf-8";
+/* ==========================================================================
+Button
+========================================================================== */
+.c-btn {
+  border: none;
+  border-radius: 10px;
+  transition: all 0.3s;
+  color: white;
+  transition: all 0.5s;
+  //サイズ
+  &--md {
+    @extend .c-btn;
+    height: 40px;
+    width: 80px;
+  }
+  &--wide {
+    @extend .c-btn;
+    height: 40px;
+    width: 120px;
+  }
+  //タグ種別に応じた表示調整
+  &--radio {
+    opacity: 0;
+    width: 0;
+  }
+  &--label {
+    line-height: 2.5;
+    text-align: center;
+  }
+  &--input {
+    font-size: 1.6rem;
+  }
+  //カラー
+  &--config {
+    background-color: $submit;
+  }
+  &--rest {
+    background-color: $rest;
+  }
+  &--work,
+  &--reset {
+    background-color: $work;
+  }
+  &--humor,
+  &--event {
+    background-color: $humor;
+  }
+  &--inspi,
+  &--coding {
+    background-color: $inspi;
+  }
+  &--trainee,
+  &--training {
+    background-color: $trainee;
+  }
+  &:hover {
+    transition: all 0.3s;
+    opacity: 0.5;
+  }
+  //ボックス
+  &-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+    height: 15vh;
+    background: #ffeaea;
+    @include pc() {
+      height: 80px;
+    }
+  }
+}

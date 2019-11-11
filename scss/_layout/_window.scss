@@ -1,0 +1,15 @@
+@charset "utf-8";
+/* ==========================================================================
+Window
+========================================================================== */
+.l-window {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  @include pc() {
+    margin: 0 auto;
+    width: 600px;
+    height: auto;
+    padding-top: 50px;
+  }
+}

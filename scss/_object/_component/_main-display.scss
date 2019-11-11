@@ -1,0 +1,78 @@
+@charset "utf-8";
+/* ==========================================================================
+Main-display
+========================================================================== */
+.c-main-display {
+  // display: flex;
+  // flex-direction: column;
+  position: relative;
+  width: 100%;
+  height: 65vh;
+  overflow: hidden;
+  @include pc() {
+    width: 100%;
+    height: 350px;
+    margin: 0 auto;
+  }
+
+  &__head {
+    margin-top: 30px;
+  }
+  &__body {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__bottom {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+  }
+  &--bg {
+    transition: all 0.7s;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    &--humor {
+      @extend .c-main-display--bg;
+      background-image: url(../img/bg/bg-humor.jpg);
+    }
+    &--inspi {
+      @extend .c-main-display--bg;
+      background-image: url(../img/bg/bg-inspi.jpg);
+    }
+    &--train {
+      @extend .c-main-display--bg;
+      background-image: url(../img/bg/bg-trainee.jpg);
+    }
+  }
+}
+//背景画像表示クラス
+.op {
+  background-image: url(../img/op/op.png);
+}
+.humor {
+  background-image: url(../img/setting/humor.png);
+}
+.inspi {
+  background-image: url(../img/setting/inspiration.png);
+}
+.trainee {
+  background-image: url(../img/setting/trainee.png);
+}
+.bad-end1 {
+  background-image: url(../img/result/bad-end1.png);
+}
+.bad-end2 {
+  background-image: url(../img/result/bad-end2.png);
+}
+.good-end {
+  background-image: url(../img/result/good-end.png);
+}
+.happy-end {
+  background-image: url(../img/result/happy-end.png);
+}
+.muscle-end {
+  background-image: url(../img/result/muscle-end.png);
+}

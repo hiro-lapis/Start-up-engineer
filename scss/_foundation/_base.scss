@@ -7,10 +7,10 @@ html, body {
     background: $color_base;
     color: $font-color_default;
     font-size: $font-size_default;
-    box-sizing: border-box;
-//   line-height:1.4;
     font-family: 'M PLUS Rounded 1c', sans-serif;
     text-size-adjust: 100%;
+    //   line-height:1.4;
+    box-sizing: border-box;
     scroll-behavior: smooth;
 //    letter-spacing: 0.1em;
 }

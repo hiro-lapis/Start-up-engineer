@@ -1,0 +1,56 @@
+@charset "utf-8";
+/* ==========================================================================
+Modal
+========================================================================== */
+.c-modal {
+  //ヘルプ用モーダル
+  display: none;
+  position: absolute;
+  top: 20px;
+  padding: 2rem;
+  width: 300px;
+  height: 670px;
+  background: #f6f5f4;
+  border-radius: 10px;
+  text-align: left;
+  line-height: 2.4rem;
+  z-index: 2;
+  @include pc() {
+    margin-top: 30px;
+    width: 400px;
+    height: 550px;
+  }
+  &--info {
+    border: dashed 2px $message-border;
+  }
+  &__bottom {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  //イベント用モーダル
+  &--small {
+    @extend .c-modal;
+    height: 400px;
+    @include pc() {
+      width: 400px;
+      height: 600px;
+    }
+  }
+  &--event {
+    border: double 4px $color_black3;
+    &__body {
+      margin: 20px auto;
+    }
+  }
+}
+
+.c-modal-bg {
+  display: none;
+  position: absolute;
+  background: $color_black4;
+  opacity: 0.3;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
